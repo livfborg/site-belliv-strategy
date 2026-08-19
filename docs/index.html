@@ -1,0 +1,2022 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Design system da BELLIV Strategy, derivado do Manual da Marca v1.0.">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<title>Belliv Strategy Design System</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
+
+<style>
+/* ==========================================================================
+   BELLIV STRATEGY · DESIGN SYSTEM
+   Dark-first: Graphite é o fundo institucional e 60% do sistema de cor,
+   então o tema escuro vive no :root e o claro é a exceção editorial.
+   ========================================================================== */
+
+/* --- cores da marca, fixas: usadas em specimens que não trocam de tema --- */
+:root {
+  --bv-lilac:       #A98BEF;
+  --bv-lilac-ink:   #5B3FB0;
+  --bv-deep-violet: #302544;
+  --bv-graphite:    #18171C;
+  --bv-soft-lilac:  #EAE4FA;
+  --bv-ivory:       #F8F7F2;
+
+  --v-50:#F4F1FE; --v-100:#EAE4FA; --v-200:#D8CDF7; --v-300:#C3AEF2;
+  --v-400:#A98BEF; --v-500:#8E6AE4; --v-600:#7452CF; --v-700:#5B3FB0;
+  --v-800:#45308A; --v-900:#302544; --v-950:#1E1830;
+
+  --n-0:#FFFFFF; --n-50:#F8F7F2; --n-100:#F1EFE9; --n-200:#E3E0D9;
+  --n-300:#CAC7C2; --n-400:#A5A2A6; --n-500:#7C7A80; --n-600:#5C5A61;
+  --n-700:#414046; --n-800:#2A292F; --n-900:#18171C; --n-950:#0F0E12;
+
+  --font-sans:  "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono:  Menlo, ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, monospace;
+
+  /* --- chrome da página: TEMA ESCURO (padrão institucional) --- */
+  --c-bg:        #18171C;
+  --c-bg-raised: #2A292F;
+  --c-bg-sunken: #0F0E12;
+  --c-bg-brand:  #302544;
+  --c-text:      #F8F7F2;
+  --c-text-mid:  #CAC7C2;
+  --c-text-dim:  #A5A2A6;
+  --c-accent:    #A98BEF;
+  --c-line:      #2A292F;
+  --c-line-mid:  #414046;
+  --c-ok:        #5FC9AC;
+  --c-warn:      #E5B15C;
+  --c-bad:       #F2818E;
+  --c-shadow:    0 16px 48px rgb(0 0 0 / 0.45);
+}
+
+/* tema claro: quando o sistema pede claro e não há escolha explícita por escuro */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --c-bg:        #F8F7F2;
+    --c-bg-raised: #FFFFFF;
+    --c-bg-sunken: #F1EFE9;
+    --c-bg-brand:  #EAE4FA;
+    --c-text:      #18171C;
+    --c-text-mid:  #5C5A61;
+    --c-text-dim:  #7C7A80;
+    --c-accent:    #5B3FB0;
+    --c-line:      #E3E0D9;
+    --c-line-mid:  #CAC7C2;
+    --c-ok:        #1F6F5C;
+    --c-warn:      #8A5A12;
+    --c-bad:       #A8283A;
+    --c-shadow:    0 16px 48px rgb(24 23 28 / 0.10);
+  }
+}
+/* escolha explícita por claro vence um SO escuro */
+:root[data-theme="light"] {
+  --c-bg:        #F8F7F2;
+  --c-bg-raised: #FFFFFF;
+  --c-bg-sunken: #F1EFE9;
+  --c-bg-brand:  #EAE4FA;
+  --c-text:      #18171C;
+  --c-text-mid:  #5C5A61;
+  --c-text-dim:  #7C7A80;
+  --c-accent:    #5B3FB0;
+  --c-line:      #E3E0D9;
+  --c-line-mid:  #CAC7C2;
+  --c-ok:        #1F6F5C;
+  --c-warn:      #8A5A12;
+  --c-bad:       #A8283A;
+  --c-shadow:    0 16px 48px rgb(24 23 28 / 0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ------------------------------------------------------------- ESTRUTURA */
+.shell { display: grid; grid-template-columns: 15.5rem minmax(0,1fr); }
+
+.rail {
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 2.5rem 1.5rem 3rem;
+  border-right: 1px solid var(--c-line);
+  background: var(--c-bg);
+}
+.rail__mark { display: block; margin-bottom: 2.25rem; text-decoration: none; color: inherit; }
+.rail__nav { display: flex; flex-direction: column; gap: 0.1rem; }
+.rail__link {
+  display: grid; grid-template-columns: 1.9rem 1fr; gap: 0.5rem;
+  align-items: baseline;
+  padding: 0.42rem 0.5rem;
+  color: var(--c-text-mid);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  border-radius: 2px;
+  transition: color 160ms cubic-bezier(.2,0,.2,1), background-color 160ms cubic-bezier(.2,0,.2,1);
+}
+.rail__link:hover { color: var(--c-text); background: var(--c-bg-sunken); }
+.rail__link.is-active { color: var(--c-accent); background: var(--c-bg-sunken); }
+.rail__num { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--c-text-dim); }
+.rail__link.is-active .rail__num { color: var(--c-accent); }
+.rail__foot {
+  margin-top: 2.25rem; padding-top: 1.25rem;
+  border-top: 1px solid var(--c-line);
+  font-size: 0.6875rem; line-height: 1.7; color: var(--c-text-dim);
+  font-family: var(--font-mono);
+}
+
+.main { min-width: 0; }
+.wrap { max-width: 68rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 4rem); }
+
+/* ------------------------------------------------------------ TIPOGRAFIA */
+.eyebrow {
+  display: flex; align-items: baseline; gap: 0.6rem;
+  margin: 0 0 1.5rem;
+  font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--c-accent);
+}
+.eyebrow__en { color: var(--c-text-dim); letter-spacing: 0.18em; }
+
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; font-weight: 300; line-height: 1.14; }
+h2 { font-size: clamp(1.75rem, 3.2vw, 2.4414rem); margin-bottom: 0.75rem; }
+h3 {
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--c-text-mid); margin-bottom: 1rem;
+}
+h4 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+
+.serif { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.015em; }
+.lede {
+  max-width: 62ch; margin: 0 0 2rem;
+  font-size: 1.125rem; color: var(--c-text-mid); line-height: 1.62;
+}
+p { margin: 0 0 1rem; max-width: 68ch; }
+.dim { color: var(--c-text-dim); }
+.mono { font-family: var(--font-mono); font-size: 0.8125em; }
+a { color: var(--c-accent); }
+
+section.band { padding-block: clamp(3.5rem, 7vw, 6rem); border-top: 1px solid var(--c-line); }
+section.band:first-of-type { border-top: 0; }
+
+.grid { display: grid; gap: 1.5rem; }
+.g2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.g3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.g4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.g6 { grid-template-columns: repeat(6, minmax(0,1fr)); }
+.stack { display: flex; flex-direction: column; gap: 2.5rem; }
+.row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+
+/* ----------------------------------------------------------------- HERO */
+.hero { position: relative; overflow: hidden; background: var(--bv-graphite); color: var(--bv-ivory); }
+.hero__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
+/* O manual proíbe o feixe sobre conteúdo com muita informação. O véu abaixo
+   preserva o grafismo e mantém o texto legível: mesma cor da superfície,
+   dissolvendo na direção em que o leque abre. */
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(96deg,
+    var(--bv-graphite) 0%,
+    rgb(24 23 28 / 0.86) 30%,
+    rgb(24 23 28 / 0.40) 52%,
+    transparent 72%);
+}
+.hero__inner {
+  position: relative; z-index: 2;
+  padding: clamp(3.5rem, 8vw, 7rem) clamp(1.25rem, 4vw, 4rem) clamp(3rem, 6vw, 5rem);
+  max-width: 68rem; margin-inline: auto;
+}
+.hero__meta {
+  display: flex; flex-wrap: wrap; gap: 1.5rem;
+  font-family: var(--font-mono); font-size: 0.6875rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: #A5A2A6; margin-bottom: clamp(3rem, 8vw, 6rem);
+}
+.hero__meta b { color: var(--bv-lilac); font-weight: 400; }
+.hero__sig {
+  margin: 2.25rem 0 0; font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+  font-weight: 300; line-height: 1.12; text-transform: uppercase;
+  letter-spacing: 0.005em;
+}
+.hero__sig span { color: var(--bv-lilac); }
+.hero__phrase {
+  margin: 1.75rem 0 0; max-width: 30ch;
+  font-family: var(--font-serif); font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+  color: var(--bv-soft-lilac);
+}
+
+/* -------------------------------------------------------------- WORDMARK */
+.wordmark { display: inline-flex; flex-direction: column; gap: 0.42em; line-height: 1; }
+.wordmark__name {
+  font-size: 1em; font-weight: 200;
+  letter-spacing: 0.38em; text-transform: uppercase;
+  margin-right: -0.38em;
+}
+.wordmark__desc {
+  font-size: 0.34em; font-weight: 400;
+  letter-spacing: 0.52em; text-transform: uppercase;
+  margin-right: -0.52em; opacity: 0.62;
+}
+.hero .wordmark { font-size: clamp(2.5rem, 6.5vw, 4.75rem); }
+.rail .wordmark { font-size: 1.375rem; }
+
+/* --------------------------------------------------------------- SPECIMEN */
+/* Specimens mostram superfícies FIXAS da marca. Não seguem o tema do leitor —
+   um specimen do tema Graphite tem de ser Graphite sempre. */
+.spec { padding: 2rem; border-radius: 4px; }
+.spec--graphite { background: var(--bv-graphite); color: var(--bv-ivory); }
+.spec--violet   { background: var(--bv-deep-violet); color: var(--bv-ivory); }
+.spec--ivory    { background: var(--bv-ivory); color: var(--bv-graphite); }
+.spec--soft     { background: var(--bv-soft-lilac); color: var(--bv-graphite); }
+.spec--graphite .spec__label, .spec--violet .spec__label { color: var(--bv-lilac); }
+.spec--ivory .spec__label, .spec--soft .spec__label { color: var(--bv-lilac-ink); }
+.spec__label {
+  font-family: var(--font-mono); font-size: 0.625rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  margin: 0 0 1rem;
+}
+
+.frame {
+  border: 1px solid var(--c-line-mid); border-radius: 4px;
+  background: var(--c-bg-raised); overflow: hidden;
+  /* em grid os frames esticam para altura igual; sem isto o conteúdo não
+     acompanha e o fundo do frame vaza abaixo da legenda */
+  display: flex; flex-direction: column;
+}
+.frame > .spec, .frame > .frame__body { flex: 1 1 auto; }
+.frame__body { padding: 1.75rem; }
+.frame__cap {
+  margin: 0;                       /* sem isso o margin-bottom de p vaza abaixo da legenda */
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid var(--c-line);
+  background: var(--c-bg-sunken);
+  font-family: var(--font-mono); font-size: 0.6875rem;
+  color: var(--c-text-dim); line-height: 1.6;
+  max-width: none;
+}
+
+/* ------------------------------------------------------------------- COR */
+.swatch { display: flex; flex-direction: column; gap: 0.625rem; }
+.swatch__chip {
+  aspect-ratio: 4 / 5; border-radius: 3px;
+  border: 1px solid rgb(128 128 128 / 0.28);
+}
+.swatch__name {
+  font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.swatch__hex {
+  font-family: var(--font-mono); font-size: 0.6875rem; color: var(--c-text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.swatch__use { font-size: 0.75rem; color: var(--c-text-dim); line-height: 1.5; }
+
+.ramp { display: flex; border-radius: 3px; overflow: hidden; border: 1px solid var(--c-line-mid); }
+.ramp > div {
+  flex: 1; aspect-ratio: 1 / 2.4;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 0.375rem;
+  font-family: var(--font-mono); font-size: 0.5625rem;
+}
+
+.proportion { display: flex; height: 3.5rem; border-radius: 3px; overflow: hidden; border: 1px solid var(--c-line-mid); }
+.proportion > div {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.625rem; letter-spacing: 0.08em;
+}
+
+/* --------------------------------------------------------------- TABELAS */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--c-line-mid); border-radius: 4px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+th {
+  text-align: left; padding: 0.75rem 1rem; white-space: nowrap;
+  font-size: 0.625rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--c-text-dim);
+  background: var(--c-bg-sunken);
+  border-bottom: 1px solid var(--c-line-mid);
+}
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--c-line);
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: 0; }
+td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.num.wrap { white-space: normal; }
+.pill {
+  display: inline-block; padding: 0.1rem 0.5rem; border-radius: 999px;
+  font-family: var(--font-mono); font-size: 0.625rem;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  border: 1px solid currentColor;
+}
+.pill--aaa  { color: var(--c-ok); }
+.pill--aa   { color: var(--c-ok); }
+.pill--lg   { color: var(--c-warn); }
+.pill--fail { color: var(--c-bad); }
+
+.dot { display: inline-block; width: 0.7rem; height: 0.7rem; border-radius: 2px; vertical-align: -1px; margin-right: 0.4rem; border: 1px solid rgb(128 128 128 / 0.3); }
+
+/* ---------------------------------------------------------------- AVISO */
+.note {
+  display: grid; grid-template-columns: auto 1fr; gap: 1.25rem;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid var(--c-line-mid);
+  border-left: 3px solid var(--c-warn);
+  border-radius: 0 4px 4px 0;
+  background: var(--c-bg-sunken);
+}
+.note--bad { border-left-color: var(--c-bad); }
+.note__tag {
+  font-family: var(--font-mono); font-size: 0.625rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--c-warn); white-space: nowrap; padding-top: 0.2rem;
+}
+.note--bad .note__tag { color: var(--c-bad); }
+.note p:last-child { margin-bottom: 0; }
+.note h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+
+/* ------------------------------------------------------------------ CÓDIGO */
+pre {
+  margin: 0; padding: 1.25rem;
+  background: var(--c-bg-sunken);
+  border: 1px solid var(--c-line);
+  border-radius: 4px;
+  overflow-x: auto;
+  font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.7;
+  color: var(--c-text-mid);
+}
+pre b { color: var(--c-accent); font-weight: 400; }
+pre i { color: var(--c-text-dim); font-style: normal; }
+code:not(pre code) {
+  font-family: var(--font-mono); font-size: 0.8125em;
+  padding: 0.1em 0.35em; border-radius: 2px;
+  background: var(--c-bg-sunken); border: 1px solid var(--c-line);
+}
+
+/* ------------------------------------------------- ESCALA TIPOGRÁFICA */
+.scale-row {
+  display: grid; grid-template-columns: 5.5rem 1fr; gap: 1.5rem;
+  align-items: baseline; padding: 0.875rem 0;
+  border-bottom: 1px solid var(--c-line);
+}
+.scale-row:last-child { border-bottom: 0; }
+.scale-meta {
+  font-family: var(--font-mono); font-size: 0.625rem;
+  color: var(--c-text-dim); line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+.scale-demo { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 300; }
+
+.weight-row {
+  display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem;
+  align-items: baseline; padding: 0.75rem 0;
+  border-bottom: 1px solid var(--c-line);
+}
+.weight-row:last-child { border-bottom: 0; }
+
+.track-demo { font-size: 0.8125rem; text-transform: uppercase; overflow: hidden; }
+
+/* ------------------------------------------------------------ COMPONENTES */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent; border-radius: 2px;
+  font-family: var(--font-sans); font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: background-color 200ms cubic-bezier(.2,0,.2,1),
+              color 200ms cubic-bezier(.2,0,.2,1),
+              border-color 200ms cubic-bezier(.2,0,.2,1);
+}
+.btn:disabled { opacity: 0.42; cursor: not-allowed; }
+.btn--sm { padding: 0.5rem 1rem; font-size: 0.6875rem; }
+.btn--lg { padding: 1rem 2.5rem; font-size: 0.875rem; }
+
+/* botões dentro de specimen: cor fixa da superfície */
+.on-dark .btn--primary   { background: var(--bv-lilac); color: var(--bv-graphite); border-color: var(--bv-lilac); }
+.on-dark .btn--primary:hover { background: var(--v-300); border-color: var(--v-300); }
+.on-dark .btn--secondary { background: transparent; color: var(--bv-ivory); border-color: var(--n-700); }
+.on-dark .btn--secondary:hover { border-color: var(--bv-lilac); color: var(--bv-lilac); }
+.on-dark .btn--ghost     { background: transparent; color: var(--bv-lilac); border-color: transparent; }
+.on-dark .btn--ghost:hover { background: var(--bv-deep-violet); }
+.on-dark .btn--danger    { background: #F2818E; color: var(--bv-graphite); border-color: #F2818E; }
+
+.on-light .btn--primary   { background: var(--bv-lilac-ink); color: var(--bv-ivory); border-color: var(--bv-lilac-ink); }
+.on-light .btn--primary:hover { background: var(--v-800); border-color: var(--v-800); }
+.on-light .btn--secondary { background: transparent; color: var(--bv-graphite); border-color: var(--n-300); }
+.on-light .btn--secondary:hover { border-color: var(--bv-lilac); color: var(--bv-lilac-ink); }
+.on-light .btn--ghost     { background: transparent; color: var(--bv-lilac-ink); border-color: transparent; }
+.on-light .btn--ghost:hover { background: var(--bv-soft-lilac); }
+.on-light .btn--danger    { background: #A8283A; color: #FFFFFF; border-color: #A8283A; }
+
+.field { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
+.field:last-child { margin-bottom: 0; }
+.lbl {
+  font-size: 0.625rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  opacity: 0.72;
+}
+.inp {
+  width: 100%; padding: 0.75rem 1rem;
+  border-radius: 2px; border: 1px solid;
+  font-family: var(--font-sans); font-size: 0.9375rem;
+  transition: border-color 200ms cubic-bezier(.2,0,.2,1);
+  /* sem isso o select cai no controle nativo e ignora a paleta */
+  -webkit-appearance: none; appearance: none;
+}
+select.inp { padding-right: 2.25rem; }
+.on-dark  .inp { background-color: var(--n-800); color: var(--bv-ivory);    border-color: var(--n-700); }
+.on-light .inp { background-color: #FFFFFF;     color: var(--bv-graphite); border-color: var(--n-300); }
+.on-dark select.inp, .on-light select.inp {
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 0.62rem 0.4rem;
+}
+.on-dark select.inp {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23A5A2A6' stroke-width='1.5'/%3E%3C/svg%3E");
+}
+.on-light select.inp {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%235C5A61' stroke-width='1.5'/%3E%3C/svg%3E");
+}
+.on-dark  .inp:hover, .on-light .inp:hover { border-color: var(--bv-lilac); }
+.on-dark  .inp::placeholder { color: var(--n-500); }
+.on-light .inp::placeholder { color: var(--n-400); }
+.inp[aria-invalid="true"] { border-color: currentColor; }
+.on-dark  .inp[aria-invalid="true"] { border-color: #F2818E; }
+.on-light .inp[aria-invalid="true"] { border-color: #A8283A; }
+.err { font-size: 0.6875rem; font-weight: 600; }
+.on-dark .err { color: #F2818E; } .on-light .err { color: #A8283A; }
+.hint { font-size: 0.6875rem; opacity: 0.6; }
+
+.dcard { padding: 1.5rem; border-radius: 4px; border: 1px solid; }
+.on-dark  .dcard { background: var(--n-800); border-color: var(--n-700); }
+.on-light .dcard { background: #FFFFFF; border-color: var(--n-200); }
+.dcard--vector { border-top: 2px solid var(--bv-lilac); }
+.dcard h4 { font-size: 1.0625rem; margin-bottom: 0.375rem; }
+.dcard p { font-size: 0.875rem; margin: 0; opacity: 0.72; }
+
+.alert {
+  display: flex; gap: 0.75rem;
+  padding: 0.875rem 1.125rem;
+  border-left: 2px solid currentColor; border-radius: 0 2px 2px 0;
+  font-size: 0.8125rem; margin-bottom: 0.625rem;
+}
+.alert:last-child { margin-bottom: 0; }
+.on-dark  .alert { background: var(--n-950); }
+.on-light .alert { background: var(--n-100); }
+.alert__t { font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.6875rem; padding-top: 0.1rem; white-space: nowrap; }
+.alert__b { opacity: 0.85; }
+.on-dark .a-ok{color:#5FC9AC}   .on-light .a-ok{color:#1F6F5C}
+.on-dark .a-wn{color:#E5B15C}   .on-light .a-wn{color:#8A5A12}
+.on-dark .a-bd{color:#F2818E}   .on-light .a-bd{color:#A8283A}
+.on-dark .a-in{color:#A98BEF}   .on-light .a-in{color:#5B3FB0}
+.alert .alert__b { color: inherit; }
+.on-dark  .alert__b { color: var(--bv-ivory); }
+.on-light .alert__b { color: var(--bv-graphite); }
+
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 0.2rem 0.7rem; border-radius: 999px;
+  border: 1px solid currentColor;
+  font-size: 0.625rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+.rulelist { list-style: none; margin: 0; padding: 0; }
+.rulelist li { padding: 0.875rem 0; border-bottom: 1px solid; font-size: 0.9375rem; }
+.on-dark  .rulelist li { border-color: var(--n-800); }
+.on-light .rulelist li { border-color: var(--n-200); }
+.rulelist li:first-child { border-top: 1px solid; }
+.on-dark  .rulelist li:first-child { border-top-color: var(--n-800); }
+.on-light .rulelist li:first-child { border-top-color: var(--n-200); }
+.rulelist li:last-child { border-bottom: 0; }
+
+.idx { list-style: none; margin: 0; padding: 0; counter-reset: ix; }
+.idx li {
+  display: grid; grid-template-columns: 2.75rem 1fr; gap: 1rem;
+  align-items: baseline; padding: 0.875rem 0;
+  border-bottom: 1px solid; counter-increment: ix; font-size: 0.9375rem;
+}
+.on-dark .idx li { border-color: var(--n-800); } .on-light .idx li { border-color: var(--n-200); }
+.idx li:last-child { border-bottom: 0; }
+.idx li::before {
+  content: counter(ix, decimal-leading-zero);
+  font-family: var(--font-mono); font-size: 0.75rem;
+}
+.on-dark .idx li::before { color: var(--bv-lilac); } .on-light .idx li::before { color: var(--bv-lilac-ink); }
+
+.dnav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; padding: 1.125rem 1.25rem; border-bottom: 1px solid;
+}
+.on-dark .dnav { border-color: var(--n-800); } .on-light .dnav { border-color: var(--n-200); }
+.dnav__links { display: flex; gap: 1.75rem; list-style: none; margin: 0; padding: 0; }
+.dnav__link {
+  font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; padding-bottom: 0.25rem;
+  border-bottom: 2px solid transparent;
+}
+.on-dark  .dnav__link { color: var(--n-300); } .on-light .dnav__link { color: var(--n-600); }
+.on-dark  .dnav__link:hover { color: var(--bv-ivory); }
+.on-light .dnav__link:hover { color: var(--bv-graphite); }
+.dnav__link[aria-current="page"] { border-bottom-color: var(--bv-lilac); }
+.on-dark  .dnav__link[aria-current="page"] { color: var(--bv-lilac); }
+.on-light .dnav__link[aria-current="page"] { color: var(--bv-lilac-ink); }
+
+.dtable { font-size: 0.8125rem; }
+.dtable th { background: transparent; }
+.on-dark .dtable th { color: var(--n-400); border-bottom-color: var(--n-700); }
+.on-light .dtable th { color: var(--n-500); border-bottom-color: var(--n-300); }
+.on-dark .dtable td { border-bottom-color: var(--n-800); }
+.on-light .dtable td { border-bottom-color: var(--n-200); }
+
+/* ----------------------------------------------------------- LOGO / PROIBIDO */
+.forbid { display: flex; flex-direction: column; gap: 0.625rem; }
+.forbid__box {
+  aspect-ratio: 1.25 / 1; border-radius: 3px;
+  display: grid; place-items: center;
+  background: var(--bv-ivory); color: var(--bv-graphite);
+  border: 1px solid var(--n-200);
+  position: relative; overflow: hidden;
+}
+.forbid__box .wordmark { font-size: 1.05rem; }
+.forbid__cap { font-size: 0.75rem; color: var(--c-text-dim); line-height: 1.45; }
+.forbid__x {
+  position: absolute; top: 0.4rem; right: 0.5rem;
+  font-family: var(--font-mono); font-size: 0.75rem; color: #A8283A;
+}
+.f-skew   .wordmark { transform: skewX(-12deg); }
+.f-grad   { background: linear-gradient(140deg, #A98BEF, #302544); color: var(--bv-ivory); }
+.f-color  .wordmark { color: #17A97F; }
+.f-letter .wordmark__name { background: linear-gradient(90deg,#18171C 0 33%,#17A97F 33% 50%,#18171C 50%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+.clearspace {
+  position: relative; padding: 2.5rem;
+  background: var(--bv-ivory); border-radius: 3px;
+  display: grid; place-items: center;
+}
+.clearspace__in { outline: 1px dashed var(--bv-lilac-ink); outline-offset: 1.05rem; }
+.clearspace .wordmark { color: var(--bv-graphite); font-size: 1.5rem; }
+
+/* ----------------------------------------------------------------- SÍMBOLO */
+.geo { width: 100%; height: auto; display: block; }
+.geo text { font-family: var(--font-mono); font-size: 7px; fill: var(--bv-lilac); }
+.geo .gline { stroke: var(--bv-lilac); stroke-width: 0.5; stroke-dasharray: 2 2; fill: none; }
+.geo .gsolid { stroke: var(--bv-lilac); stroke-width: 0.6; fill: none; }
+
+/* --------------------------------------------------------------- RODAPÉ */
+.foot { position: relative; overflow: hidden; }
+.foot__canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+.foot::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(84deg,
+    var(--bv-graphite) 0%,
+    rgb(24 23 28 / 0.88) 34%,
+    rgb(24 23 28 / 0.42) 56%,
+    transparent 76%);
+}
+.foot__body { position: relative; z-index: 2; }
+
+/* ------------------------------------------------------------------ TOGGLE */
+.themebtn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  margin-top: 1.5rem; padding: 0.5rem 0.875rem;
+  background: transparent; color: var(--c-text-mid);
+  border: 1px solid var(--c-line-mid); border-radius: 2px;
+  font-family: var(--font-mono); font-size: 0.625rem;
+  letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+  transition: color 160ms, border-color 160ms;
+}
+.themebtn:hover { color: var(--c-accent); border-color: var(--c-accent); }
+
+/* -------------------------------------------------------------- RESPONSIVO */
+@media (max-width: 1040px) {
+  .shell { grid-template-columns: 1fr; }
+  .rail {
+    position: static; height: auto; border-right: 0;
+    border-bottom: 1px solid var(--c-line);
+    padding: 1.5rem clamp(1.25rem,4vw,4rem);
+  }
+  .rail__mark { margin-bottom: 1.25rem; }
+  .rail__nav { flex-direction: row; flex-wrap: wrap; gap: 0.25rem; }
+  .rail__link { grid-template-columns: auto auto; padding: 0.3rem 0.55rem; border: 1px solid var(--c-line); }
+  .rail__foot { margin-top: 1.25rem; }
+  .g6 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+@media (max-width: 780px) {
+  .g3, .g4 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .scale-row { grid-template-columns: 4.5rem 1fr; gap: 1rem; }
+  .weight-row { grid-template-columns: 1fr; gap: 0.25rem; }
+  .note { grid-template-columns: 1fr; gap: 0.625rem; }
+}
+@media (max-width: 560px) {
+  .g2, .g3, .g4, .g6 { grid-template-columns: 1fr; }
+  .hero__sig { font-size: 1.375rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; }
+}
+</style>
+
+<div class="shell">
+
+  <!-- ================================================== RAIL ============ -->
+  <aside class="rail">
+    <a class="rail__mark" href="#top">
+      <span class="wordmark">
+        <span class="wordmark__name">Belliv</span>
+        <span class="wordmark__desc">Strategy</span>
+      </span>
+    </a>
+
+    <nav class="rail__nav" aria-label="Seções do design system">
+      <a class="rail__link" href="#usar"><span class="rail__num">01</span><span>Como usar</span></a>
+      <a class="rail__link" href="#cor"><span class="rail__num">02</span><span>Cor</span></a>
+      <a class="rail__link" href="#tipografia"><span class="rail__num">03</span><span>Tipografia</span></a>
+      <a class="rail__link" href="#logotipo"><span class="rail__num">04</span><span>Logotipo</span></a>
+      <a class="rail__link" href="#grafico"><span class="rail__num">05</span><span>Sistema gráfico</span></a>
+      <a class="rail__link" href="#temas"><span class="rail__num">06</span><span>Temas</span></a>
+      <a class="rail__link" href="#componentes"><span class="rail__num">07</span><span>Componentes</span></a>
+      <a class="rail__link" href="#verbal"><span class="rail__num">08</span><span>Território verbal</span></a>
+      <a class="rail__link" href="#tokens"><span class="rail__num">09</span><span>Tokens</span></a>
+      <a class="rail__link" href="#decisoes"><span class="rail__num">10</span><span>Decisões</span></a>
+    </nav>
+
+    <button class="themebtn" type="button" id="themebtn" aria-live="polite">Alternar tema</button>
+
+    <div class="rail__foot">
+      Derivado do<br>Manual da Marca v1.0<br>2026 · documento interno
+    </div>
+  </aside>
+
+  <main class="main" id="top">
+
+    <!-- ================================================ HERO ============ -->
+    <header class="hero">
+      <canvas class="hero__canvas" id="fan" aria-hidden="true"></canvas>
+      <div class="hero__inner">
+        <div class="hero__meta">
+          <span>Design system <b>v1.0</b></span>
+          <span>Manual da marca <b>2026</b></span>
+          <span>Paleta <b>6 cores</b></span>
+          <span>Tipos <b>Manrope · Instrument Serif</b></span>
+        </div>
+
+        <span class="wordmark">
+          <span class="wordmark__name">Belliv</span>
+          <span class="wordmark__desc">Strategy</span>
+        </span>
+
+        <p class="hero__sig">We Belliv<br><span>in Strategy.</span></p>
+        <p class="hero__phrase">O próximo negócio pode estar dentro do negócio que <i>já existe.</i></p>
+      </div>
+    </header>
+
+    <div class="wrap">
+
+      <!-- ============================================== 01 USAR ========= -->
+      <section class="band" id="usar">
+        <p class="eyebrow"><span>01 · Como usar</span><span class="eyebrow__en">Getting started</span></p>
+        <h2 class="serif">Um sistema, três camadas.</h2>
+        <p class="lede">
+          Tudo aqui vem do manual da marca. O que o manual não definia — escalas,
+          estados de interface, cores de sistema — foi criado como extensão e está
+          declarado na <a href="#decisoes">seção 10</a>. Nada contradiz o manual.
+        </p>
+
+        <div class="grid g3">
+          <div class="frame">
+            <div class="frame__body">
+              <h4>Primitivos</h4>
+              <p class="dim" style="font-size:.875rem">
+                Valores crus: os seis hexadecimais da marca e as escalas derivadas.
+                Nunca use direto em componente.
+              </p>
+            </div>
+            <p class="frame__cap">tokens/belliv-tokens.css</p>
+          </div>
+          <div class="frame">
+            <div class="frame__body">
+              <h4>Semânticos</h4>
+              <p class="dim" style="font-size:.875rem">
+                O que você usa de fato. <code>--bv-surface</code>, <code>--bv-text</code>,
+                <code>--bv-action</code>. Trocam junto com o tema.
+              </p>
+            </div>
+            <p class="frame__cap">mesma folha · blocos de tema</p>
+          </div>
+          <div class="frame">
+            <div class="frame__body">
+              <h4>Componentes</h4>
+              <p class="dim" style="font-size:.875rem">
+                Botão, campo, card, alerta. Só referenciam semânticos, então
+                funcionam nos três temas sem trocar de classe.
+              </p>
+            </div>
+            <p class="frame__cap">css/belliv-components.css</p>
+          </div>
+        </div>
+
+        <div class="grid g2" style="margin-top:2.5rem">
+          <div>
+            <h3>Instalação · CSS puro</h3>
+<pre><i>&lt;!-- as duas fontes da marca --&gt;</i>
+&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?
+  family=<b>Manrope</b>:wght@200;300;400;600
+  &amp;family=<b>Instrument+Serif</b>:ital@0;1&amp;display=swap"&gt;
+
+&lt;link rel="stylesheet" href="<b>tokens/belliv-tokens.css</b>"&gt;
+&lt;link rel="stylesheet" href="<b>css/belliv-components.css</b>"&gt;
+
+&lt;body class="bv"&gt;…&lt;/body&gt;</pre>
+          </div>
+          <div>
+            <h3>Instalação · Tailwind</h3>
+<pre><i>// v3 — use o config pronto</i>
+module.exports = require('<b>./tokens/tailwind.config.js</b>')
+
+<i>/* v4 — importe os tokens e exponha via @theme */</i>
+@import "tailwindcss";
+@import "./tokens/<b>belliv-tokens.css</b>";
+
+@theme {
+  --color-lilac:    var(--bv-lilac);
+  --color-graphite: var(--bv-graphite);
+  --font-sans:      var(--bv-font-sans);
+  --font-serif:     var(--bv-font-serif);
+}</pre>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:2rem">
+          <span class="note__tag">Fontes</span>
+          <div>
+            <h4>Instale Manrope e Instrument Serif antes de abrir qualquer arquivo de design.</h4>
+            <p class="dim" style="font-size:.875rem;margin:0">
+              As duas são gratuitas no Google Fonts. Sem elas, o logotipo e todos os
+              títulos caem em fonte substituta e o sistema perde a identidade —
+              o tracking largo da Manrope é o que identifica a marca tipograficamente.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================== 02 COR ========== -->
+      <section class="band" id="cor">
+        <p class="eyebrow"><span>02 · Cor</span><span class="eyebrow__en">Color</span></p>
+        <h2 class="serif">Seis cores, uma proporção.</h2>
+        <p class="lede">
+          A paleta é fechada. Graphite é o fundo institucional; o lilás é acento e
+          nunca massa. Toda combinação abaixo foi medida em WCAG 2.1 — não estimada.
+        </p>
+
+        <div class="grid g6">
+          <div class="swatch">
+            <div class="swatch__chip" style="background:#18171C"></div>
+            <span class="swatch__name">Graphite</span>
+            <span class="swatch__hex">#18171C</span>
+            <span class="swatch__use">Fundo institucional</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background:#302544"></div>
+            <span class="swatch__name">Deep Violet</span>
+            <span class="swatch__hex">#302544</span>
+            <span class="swatch__use">Superfície de destaque</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background:#5B3FB0"></div>
+            <span class="swatch__name">Lilac Ink</span>
+            <span class="swatch__hex">#5B3FB0</span>
+            <span class="swatch__use">Texto e link em claro</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background:#A98BEF"></div>
+            <span class="swatch__name">Belliv Lilac</span>
+            <span class="swatch__hex">#A98BEF</span>
+            <span class="swatch__use">Acento, símbolo, detalhe</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background:#EAE4FA"></div>
+            <span class="swatch__name">Soft Lilac</span>
+            <span class="swatch__hex">#EAE4FA</span>
+            <span class="swatch__use">Superfície clara de marca</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background:#F8F7F2"></div>
+            <span class="swatch__name">Ivory</span>
+            <span class="swatch__hex">#F8F7F2</span>
+            <span class="swatch__use">Papel</span>
+          </div>
+        </div>
+
+        <h3 style="margin-top:3rem">Proporção de uso</h3>
+        <div class="proportion">
+          <div style="background:#18171C;color:#F8F7F2;flex:60">60% Graphite</div>
+          <div style="background:#F8F7F2;color:#18171C;flex:25">25% Ivory</div>
+          <div style="background:#302544;color:#F8F7F2;flex:10">10% Violet</div>
+          <div style="background:#A98BEF;color:#18171C;flex:5">5%</div>
+        </div>
+        <p class="dim" style="font-size:.875rem;margin-top:.875rem">
+          Deep Violet aparece em superfícies de destaque e <b>nunca no mesmo bloco que
+          Graphite</b>. Use um ou o outro por seção.
+        </p>
+
+        <h3 style="margin-top:3rem">Matriz de contraste</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Texto</th>
+                <th>sobre Ivory</th>
+                <th>sobre Soft Lilac</th>
+                <th>sobre Graphite</th>
+                <th>sobre Deep Violet</th>
+                <th>sobre Lilac Ink</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="dot" style="background:#18171C"></span>Graphite</td>
+                <td class="num">16.62 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num">14.41 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num dim">—</td>
+                <td class="num">1.25 <span class="pill pill--fail">não</span></td>
+                <td class="num">2.36 <span class="pill pill--fail">não</span></td>
+              </tr>
+              <tr>
+                <td><span class="dot" style="background:#302544"></span>Deep Violet</td>
+                <td class="num">13.28 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num">11.52 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num">1.25 <span class="pill pill--fail">não</span></td>
+                <td class="num dim">—</td>
+                <td class="num">1.89 <span class="pill pill--fail">não</span></td>
+              </tr>
+              <tr>
+                <td><span class="dot" style="background:#5B3FB0"></span>Lilac Ink</td>
+                <td class="num">7.04 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num">6.10 <span class="pill pill--aa">AA</span></td>
+                <td class="num">2.36 <span class="pill pill--fail">não</span></td>
+                <td class="num">1.89 <span class="pill pill--fail">não</span></td>
+                <td class="num dim">—</td>
+              </tr>
+              <tr>
+                <td><span class="dot" style="background:#A98BEF"></span>Belliv Lilac</td>
+                <td class="num">2.57 <span class="pill pill--fail">não</span></td>
+                <td class="num">2.23 <span class="pill pill--fail">não</span></td>
+                <td class="num">6.47 <span class="pill pill--aa">AA</span></td>
+                <td class="num">5.17 <span class="pill pill--aa">AA</span></td>
+                <td class="num">2.74 <span class="pill pill--fail">não</span></td>
+              </tr>
+              <tr>
+                <td><span class="dot" style="background:#EAE4FA"></span>Soft Lilac</td>
+                <td class="num">1.15 <span class="pill pill--fail">não</span></td>
+                <td class="num dim">—</td>
+                <td class="num">14.41 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num">11.52 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num">6.10 <span class="pill pill--aa">AA</span></td>
+              </tr>
+              <tr>
+                <td><span class="dot" style="background:#F8F7F2"></span>Ivory</td>
+                <td class="num dim">—</td>
+                <td class="num">1.15 <span class="pill pill--fail">não</span></td>
+                <td class="num">16.62 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num">13.28 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num">7.04 <span class="pill pill--aaa">AAA</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note note--bad" style="margin-top:2rem">
+          <span class="note__tag">Corrigir</span>
+          <div>
+            <h4>Lilás sobre Ivory não passa em nenhum tamanho.</h4>
+            <p style="font-size:.9375rem">
+              O manual autoriza <i>"Lilac sobre Ivory: apenas títulos acima de 40 px"</i>.
+              A combinação mede <b>2.57:1</b>. O mínimo WCAG para texto grande é 3:1 —
+              ela reprova <b>inclusive como texto grande</b>, em qualquer tamanho.
+            </p>
+            <p style="font-size:.9375rem;margin-bottom:0">
+              Se o título precisa ser lido, use <b>Lilac Ink</b> (7.04:1). Reserve o
+              lilás sobre Ivory para elemento gráfico puro, onde nenhuma informação
+              depende dele. Em fundo escuro o problema não existe: lá o lilás mede
+              6.47:1 e é a cor correta de texto e link, como o manual determina.
+            </p>
+            <div class="grid g2" style="margin-top:1.25rem;gap:1rem">
+              <div class="spec spec--ivory" style="padding:1.25rem">
+                <p class="spec__label" style="color:#A8283A">✕ Evite · 2.57:1</p>
+                <p style="font-family:var(--font-serif);font-size:1.75rem;margin:0;color:#A98BEF">Estratégia em movimento</p>
+              </div>
+              <div class="spec spec--ivory" style="padding:1.25rem">
+                <p class="spec__label" style="color:#1F6F5C">✓ Use · 7.04:1</p>
+                <p style="font-family:var(--font-serif);font-size:1.75rem;margin:0;color:#5B3FB0">Estratégia em movimento</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:3rem">Escalas derivadas <span class="dim" style="text-transform:none;letter-spacing:0;font-weight:400">— extensão</span></h3>
+        <p class="dim" style="font-size:.875rem;max-width:68ch">
+          Interface precisa de estados: hover, active, desabilitado, borda, superfície
+          elevada. As quatro cores oficiais ocupam as posições 100, 400, 700 e 900 da
+          escala violeta e não foram alteradas.
+        </p>
+        <div class="ramp" style="margin-top:1rem">
+          <div style="background:#F4F1FE;color:#302544">50</div>
+          <div style="background:#EAE4FA;color:#302544">100</div>
+          <div style="background:#D8CDF7;color:#302544">200</div>
+          <div style="background:#C3AEF2;color:#302544">300</div>
+          <div style="background:#A98BEF;color:#18171C">400</div>
+          <div style="background:#8E6AE4;color:#F8F7F2">500</div>
+          <div style="background:#7452CF;color:#F8F7F2">600</div>
+          <div style="background:#5B3FB0;color:#F8F7F2">700</div>
+          <div style="background:#45308A;color:#F8F7F2">800</div>
+          <div style="background:#302544;color:#F8F7F2">900</div>
+          <div style="background:#1E1830;color:#F8F7F2">950</div>
+        </div>
+        <div class="ramp" style="margin-top:.625rem">
+          <div style="background:#FFFFFF;color:#18171C">0</div>
+          <div style="background:#F8F7F2;color:#18171C">50</div>
+          <div style="background:#F1EFE9;color:#18171C">100</div>
+          <div style="background:#E3E0D9;color:#18171C">200</div>
+          <div style="background:#CAC7C2;color:#18171C">300</div>
+          <div style="background:#A5A2A6;color:#18171C">400</div>
+          <div style="background:#7C7A80;color:#F8F7F2">500</div>
+          <div style="background:#5C5A61;color:#F8F7F2">600</div>
+          <div style="background:#414046;color:#F8F7F2">700</div>
+          <div style="background:#2A292F;color:#F8F7F2">800</div>
+          <div style="background:#18171C;color:#F8F7F2">900</div>
+          <div style="background:#0F0E12;color:#F8F7F2">950</div>
+        </div>
+
+        <h3 style="margin-top:2.5rem">Cores de sistema <span class="dim" style="text-transform:none;letter-spacing:0;font-weight:400">— extensão</span></h3>
+        <p class="dim" style="font-size:.875rem;max-width:68ch">
+          O manual não define sucesso, alerta ou erro. Foram escolhidas frias e
+          dessaturadas para respeitar <i>"evitar cores quentes saturadas"</i>, e cada uma
+          passa AA na superfície a que se destina. <b>Uso restrito a feedback de
+          sistema</b> — nunca em peça de marca, nunca perto do logotipo.
+        </p>
+        <div class="tbl-wrap" style="margin-top:1rem">
+          <table>
+            <thead><tr><th>Papel</th><th>Em superfície clara</th><th>Em superfície escura</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Sucesso</td>
+                <td class="num"><span class="dot" style="background:#1F6F5C"></span>#1F6F5C · 5.62 <span class="pill pill--aa">AA</span></td>
+                <td class="num"><span class="dot" style="background:#5FC9AC"></span>#5FC9AC · 8.86 <span class="pill pill--aaa">AAA</span></td>
+              </tr>
+              <tr>
+                <td>Alerta</td>
+                <td class="num"><span class="dot" style="background:#8A5A12"></span>#8A5A12 · 5.51 <span class="pill pill--aa">AA</span></td>
+                <td class="num"><span class="dot" style="background:#E5B15C"></span>#E5B15C · 9.15 <span class="pill pill--aaa">AAA</span></td>
+              </tr>
+              <tr>
+                <td>Erro</td>
+                <td class="num"><span class="dot" style="background:#A8283A"></span>#A8283A · 6.46 <span class="pill pill--aa">AA</span></td>
+                <td class="num"><span class="dot" style="background:#F2818E"></span>#F2818E · 7.05 <span class="pill pill--aaa">AAA</span></td>
+              </tr>
+              <tr>
+                <td>Informação</td>
+                <td class="num"><span class="dot" style="background:#5B3FB0"></span>#5B3FB0 · 7.04 <span class="pill pill--aaa">AAA</span></td>
+                <td class="num"><span class="dot" style="background:#A98BEF"></span>#A98BEF · 6.47 <span class="pill pill--aa">AA</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================= 03 TIPOGRAFIA ======== -->
+      <section class="band" id="tipografia">
+        <p class="eyebrow"><span>03 · Tipografia</span><span class="eyebrow__en">Type</span></p>
+        <h2 class="serif">Duas famílias, papéis que não se cruzam.</h2>
+        <p class="lede">
+          Manrope carrega o sistema. Instrument Serif entra só onde a marca fala —
+          frase de abertura, assinatura editorial. As duas nunca disputam o mesmo bloco.
+        </p>
+
+        <div class="grid g2">
+          <div class="frame">
+            <div class="frame__body">
+              <p style="font-size:clamp(2.5rem,5vw,3.5rem);font-weight:200;margin:0 0 .5rem;line-height:1">Manrope</p>
+              <p class="eyebrow" style="margin-bottom:.75rem"><span>Principal · sans</span></p>
+              <p style="font-size:.9375rem;margin-bottom:1.25rem">
+                Moderna, precisa e contemporânea. Títulos institucionais, texto,
+                interface e assinaturas.
+              </p>
+              <p style="font-weight:300;font-size:1.0625rem;margin:0;letter-spacing:.01em">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789
+              </p>
+            </div>
+            <p class="frame__cap">--bv-font-sans</p>
+          </div>
+          <div class="frame">
+            <div class="frame__body">
+              <p class="serif" style="font-size:clamp(2.5rem,5vw,3.5rem);margin:0 0 .5rem;line-height:1">Instrument Serif</p>
+              <p class="eyebrow" style="margin-bottom:.75rem"><span>Destaque · serif contemporânea</span></p>
+              <p style="font-size:.9375rem;margin-bottom:1.25rem">
+                Geometria fechada e desenho contemporâneo, para frases de marca e
+                aberturas editoriais. <b>Nunca em texto corrido.</b>
+              </p>
+              <p class="serif" style="font-size:1.25rem;margin:0">
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789
+              </p>
+            </div>
+            <p class="frame__cap">--bv-font-serif</p>
+          </div>
+        </div>
+
+        <div class="spec spec--graphite" style="margin-top:1.5rem">
+          <p class="spec__label">Frase de marca · serif sobre Graphite</p>
+          <p class="serif" style="font-size:clamp(1.5rem,3.6vw,2.4rem);line-height:1.15;margin:0;max-width:28ch">
+            O próximo negócio pode estar dentro do negócio que
+            <i style="color:#A98BEF">já existe.</i>
+          </p>
+        </div>
+
+        <h3 style="margin-top:3rem">Pesos</h3>
+        <div class="frame"><div class="frame__body" style="padding-block:.75rem">
+          <div class="weight-row">
+            <span class="scale-meta">ExtraLight 200</span>
+            <span style="font-weight:200;font-size:1.5rem;letter-spacing:.02em">Wordmark e títulos grandes</span>
+          </div>
+          <div class="weight-row">
+            <span class="scale-meta">Light 300</span>
+            <span style="font-weight:300;font-size:1.5rem">Títulos</span>
+          </div>
+          <div class="weight-row">
+            <span class="scale-meta">Regular 400</span>
+            <span style="font-weight:400;font-size:1.5rem">Texto corrido</span>
+          </div>
+          <div class="weight-row">
+            <span class="scale-meta">SemiBold 600</span>
+            <span style="font-weight:600;font-size:1.5rem">Rótulos e ênfase</span>
+          </div>
+        </div></div>
+
+        <h3 style="margin-top:2.5rem">Escala · razão 1.25, base 16 px</h3>
+        <div class="frame"><div class="frame__body">
+          <div class="scale-row"><span class="scale-meta">6xl<br>76 px</span><span class="scale-demo" style="font-size:3.25rem;font-weight:200">Estratégia</span></div>
+          <div class="scale-row"><span class="scale-meta">5xl<br>61 px</span><span class="scale-demo" style="font-size:2.75rem;font-weight:200">Estratégia em movimento</span></div>
+          <div class="scale-row"><span class="scale-meta">4xl<br>49 px</span><span class="scale-demo" style="font-size:2.25rem;font-weight:200">Estratégia em movimento</span></div>
+          <div class="scale-row"><span class="scale-meta">3xl<br>39 px</span><span class="scale-demo" style="font-size:1.9rem">Estratégia em movimento</span></div>
+          <div class="scale-row"><span class="scale-meta">2xl<br>31 px</span><span class="scale-demo" style="font-size:1.55rem">Estratégia em movimento</span></div>
+          <div class="scale-row"><span class="scale-meta">xl<br>25 px</span><span class="scale-demo" style="font-size:1.3rem">Estratégia em movimento</span></div>
+          <div class="scale-row"><span class="scale-meta">lg<br>20 px</span><span class="scale-demo" style="font-size:1.15rem;font-weight:400">Estratégia aplicada à realidade da operação</span></div>
+          <div class="scale-row"><span class="scale-meta">base<br>16 px</span><span class="scale-demo" style="font-size:1rem;font-weight:400">Estratégia aplicada à realidade da operação</span></div>
+          <div class="scale-row"><span class="scale-meta">sm<br>14 px</span><span class="scale-demo" style="font-size:.875rem;font-weight:400">Estratégia aplicada à realidade da operação</span></div>
+          <div class="scale-row"><span class="scale-meta">xs<br>12 px</span><span class="scale-demo" style="font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase">Rótulo de seção</span></div>
+        </div></div>
+
+        <h3 style="margin-top:2.5rem">Tracking — a assinatura tipográfica</h3>
+        <p class="dim" style="font-size:.875rem;max-width:68ch">
+          O letterspacing largo identifica a BELLIV mais que a paleta. Não improvise
+          valores: são cinco, cada um com um papel.
+        </p>
+        <div class="tbl-wrap" style="margin-top:1rem">
+          <table>
+            <thead><tr><th>Token</th><th>Valor</th><th>Uso</th><th>Amostra</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">tracking-tight</td><td class="num">-0.02em</td><td>Display serif</td><td class="serif" style="font-size:1.125rem;letter-spacing:-.02em">Estratégia</td></tr>
+              <tr><td class="mono">tracking-wide</td><td class="num">0.08em</td><td>Rótulo de seção, botão</td><td class="track-demo" style="letter-spacing:.08em;font-weight:600">Estratégia</td></tr>
+              <tr><td class="mono">tracking-wider</td><td class="num">0.18em</td><td>Rótulo institucional</td><td class="track-demo" style="letter-spacing:.18em;font-weight:600">Estratégia</td></tr>
+              <tr><td class="mono">tracking-widest</td><td class="num">0.38em</td><td>Wordmark BELLIV</td><td class="track-demo" style="letter-spacing:.38em;font-weight:200;font-size:1rem">Belliv</td></tr>
+              <tr><td class="mono">tracking-sub</td><td class="num">0.52em</td><td>Subtítulo STRATEGY</td><td class="track-demo" style="letter-spacing:.52em;font-size:.6875rem">Strategy</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== 04 LOGOTIPO ========= -->
+      <section class="band" id="logotipo">
+        <p class="eyebrow"><span>04 · Logotipo</span><span class="eyebrow__en">Logo usage</span></p>
+        <h2 class="serif">Versões, respiro e o que nunca fazer.</h2>
+
+        <div class="grid g3">
+          <div class="frame">
+            <div class="spec spec--graphite" style="border-radius:0;padding:2.5rem 2rem">
+              <span class="wordmark" style="font-size:1.5rem">
+                <span class="wordmark__name">Belliv</span>
+                <span class="wordmark__desc">Strategy</span>
+              </span>
+            </div>
+            <p class="frame__cap">Principal · negativa<br>sobre Graphite</p>
+          </div>
+          <div class="frame">
+            <div class="spec spec--ivory" style="border-radius:0;padding:2.5rem 2rem">
+              <span class="wordmark" style="font-size:1.5rem">
+                <span class="wordmark__name">Belliv</span>
+                <span class="wordmark__desc">Strategy</span>
+              </span>
+            </div>
+            <p class="frame__cap">Principal · positiva<br>sobre Ivory</p>
+          </div>
+          <div class="frame">
+            <div class="spec spec--soft" style="border-radius:0;padding:2.5rem 2rem">
+              <span class="wordmark" style="font-size:1.5rem;color:#18171C">
+                <span class="wordmark__name" style="font-weight:600;letter-spacing:.18em;margin-right:-.18em">Belliv</span>
+                <span class="wordmark__desc" style="color:#5B3FB0;opacity:1;letter-spacing:.28em;margin-right:-.28em;font-size:.4em">Strategy</span>
+              </span>
+            </div>
+            <p class="frame__cap">Reduzida · até 24 mm<br>peso maior, tracking menor</p>
+          </div>
+        </div>
+
+        <div class="grid g2" style="margin-top:2.5rem;align-items:start">
+          <div>
+            <h3>Área de respiro</h3>
+            <div class="clearspace">
+              <span class="clearspace__in">
+                <span class="wordmark">
+                  <span class="wordmark__name">Belliv</span>
+                  <span class="wordmark__desc">Strategy</span>
+                </span>
+              </span>
+            </div>
+            <p class="dim" style="font-size:.875rem;margin-top:.875rem">
+              A margem mínima equivale à <b>altura da letra B</b> em todos os lados.
+              Nenhum elemento invade essa área.
+            </p>
+          </div>
+
+          <div>
+            <h3>Usos proibidos</h3>
+            <div class="grid g2" style="gap:1rem">
+              <div class="forbid">
+                <div class="forbid__box f-skew">
+                  <span class="forbid__x">✕</span>
+                  <span class="wordmark"><span class="wordmark__name">Belliv</span></span>
+                </div>
+                <span class="forbid__cap">Distorcer ou inclinar</span>
+              </div>
+              <div class="forbid">
+                <div class="forbid__box f-grad">
+                  <span class="forbid__x" style="color:#F8F7F2">✕</span>
+                  <span class="wordmark"><span class="wordmark__name">Belliv</span></span>
+                </div>
+                <span class="forbid__cap">Aplicar sobre gradiente</span>
+              </div>
+              <div class="forbid">
+                <div class="forbid__box f-color">
+                  <span class="forbid__x">✕</span>
+                  <span class="wordmark"><span class="wordmark__name">Belliv</span></span>
+                </div>
+                <span class="forbid__cap">Usar cor fora da paleta</span>
+              </div>
+              <div class="forbid">
+                <div class="forbid__box f-letter">
+                  <span class="forbid__x">✕</span>
+                  <span class="wordmark"><span class="wordmark__name">Belliv</span></span>
+                </div>
+                <span class="forbid__cap">Colorir letras isoladas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:2rem">
+          <span class="note__tag">Pendente</span>
+          <div>
+            <h4>O wordmark precisa ser vetorizado antes de ir para peça final.</h4>
+            <p class="dim" style="font-size:.875rem;margin:0">
+              O lockup aqui é tipográfico: depende da Manrope estar carregada. Se a
+              fonte falha, o logotipo quebra. O <b>símbolo</b> já está em curvas nos
+              arquivos SVG; o <b>wordmark</b> não — converta em ferramenta de design
+              com a Manrope instalada.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================= 05 SISTEMA GRÁFICO ===== -->
+      <section class="band" id="grafico">
+        <p class="eyebrow"><span>05 · Sistema gráfico</span><span class="eyebrow__en">Graphic system</span></p>
+        <h2 class="serif">O símbolo e o feixe.</h2>
+        <p class="lede">
+          O manual descreve os dois em palavras, mas não dá números. Os valores abaixo
+          foram medidos pixel a pixel no PDF e a construção resultante foi conferida
+          contra o original.
+        </p>
+
+        <div class="grid g2" style="align-items:start">
+          <div>
+            <h3>Símbolo V</h3>
+            <div class="spec spec--soft" style="display:grid;place-items:center;padding:2.5rem">
+              <svg class="geo" viewBox="-42 -28 220 238" style="max-width:360px" role="img"
+                   aria-label="Construção geométrica do símbolo V: abertura total de 50,67 graus, espessura de 12 por cento da altura e vértice interno a 71,96 por cento da altura">
+                <!-- linhas de referência de altura -->
+                <path class="gline" d="M -34 0 L 168 0"/>
+                <path class="gline" d="M -34 107.94 L 168 107.94"/>
+                <path class="gline" d="M -34 150 L 168 150"/>
+                <!-- eixo central -->
+                <path class="gline" d="M 67.37 -20 L 67.37 198"/>
+                <!-- eixos dos braços, prolongados abaixo do vértice -->
+                <path class="gline" d="M 8.13 3.85 L 82.40 187.1"/>
+                <path class="gline" d="M 126.61 3.85 L 52.34 187.1"/>
+                <!-- o símbolo -->
+                <path fill="#5B3FB0" d="M 0 7.702 L 67.370 150 L 134.740 7.702 L 118.472 0 L 67.370 107.935 L 16.269 0 Z"/>
+                <!-- abertura: arco abaixo do vértice, entre os eixos dos braços -->
+                <path class="gsolid" d="M 56.85 175.95 A 28 28 0 0 0 77.89 175.95"/>
+                <text x="67.37" y="193" text-anchor="middle">50,67°</text>
+                <!-- espessura: cota paralela ao terminal, que é cortado perpendicular ao braço -->
+                <path class="gsolid" d="M -4.28 -1.34 L 11.99 -9.04"/>
+                <path class="gsolid" d="M 0 7.702 L -4.28 -1.34"/>
+                <path class="gsolid" d="M 16.269 0 L 11.99 -9.04"/>
+                <text x="3.86" y="-14" text-anchor="middle">12% h</text>
+                <!-- alturas -->
+                <text x="-34" y="-3" text-anchor="start">0</text>
+                <text x="-34" y="105" text-anchor="start">71,96%</text>
+                <text x="-34" y="147" text-anchor="start">100%</text>
+              </svg>
+            </div>
+            <div class="tbl-wrap" style="margin-top:1rem">
+              <table>
+                <tbody>
+                  <tr><td>Abertura total</td><td class="num">50,67°</td></tr>
+                  <tr><td>Largura / altura</td><td class="num">0,8983</td></tr>
+                  <tr><td>Espessura</td><td class="num">12% da altura</td></tr>
+                  <tr><td>Vértice interno</td><td class="num">71,96% da altura</td></tr>
+                  <tr><td>Terminais do topo</td><td class="num">corte perpendicular</td></tr>
+                  <tr><td>Vértice inferior</td><td class="num">ângulo vivo</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="dim" style="font-size:.875rem;margin-top:1rem">
+              <b>Vision · Value · Velocity · Visionary thinking.</b> Um vetor que abre
+              caminhos. <b>Não é a letra V da tipografia.</b>
+            </p>
+            <div class="note" style="margin-top:1rem">
+              <span class="note__tag">Detalhe</span>
+              <div>
+                <p style="font-size:.875rem;margin:0">
+                  Os terminais do topo são cortados <b>perpendicularmente ao braço</b>,
+                  não na horizontal — por isso o canto interno de cada braço fica mais
+                  alto que o externo. Um V com corte horizontal não é o símbolo da BELLIV.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3>Feixe BELLIV</h3>
+            <div class="spec spec--graphite" style="padding:0;overflow:hidden">
+              <canvas id="fanref" style="width:100%;height:auto;display:block" aria-hidden="true"></canvas>
+            </div>
+            <p class="dim" style="font-size:.875rem;margin-top:.875rem">
+              Grafismo único — <b>não existem duas versões.</b>
+            </p>
+            <div class="tbl-wrap" style="margin-top:1rem">
+              <table>
+                <tbody>
+                  <tr><td>Raios</td><td class="num">13, de mesmo comprimento</td></tr>
+                  <tr><td>Primeiro raio</td><td class="num">1° da vertical</td></tr>
+                  <tr><td>Passo angular</td><td class="num">7°, constante</td></tr>
+                  <tr><td>Último raio</td><td class="num">85° da vertical</td></tr>
+                  <tr><td>Abertura do leque</td><td class="num">84°</td></tr>
+                  <tr><td>Traço</td><td class="num">1 pt em escala de referência</td></tr>
+                  <tr><td>Opacidade</td><td class="num">100% na origem → 40% na ponta</td></tr>
+                  <tr><td>Fundo</td><td class="num">só Graphite ou Deep Violet</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="note" style="margin-top:1rem">
+              <span class="note__tag">Construção</span>
+              <div>
+                <p style="font-size:.875rem;margin:0 0 .625rem">
+                  Os 13 raios têm o <b>mesmo comprimento</b> — as pontas descrevem um
+                  arco, não a moldura. Essa é a chave: o feixe não é "linhas cortadas
+                  pela borda", é um leque de raios iguais.
+                </p>
+                <p style="font-size:.875rem;margin:0">
+                  Em aplicação ampliada as pontas caem fora do quadro e o corte fica
+                  invisível — mas a construção continua a mesma.
+                </p>
+              </div>
+            </div>
+            <div class="note note--bad" style="margin-top:1rem">
+              <span class="note__tag">Corrigir</span>
+              <div>
+                <p style="font-size:.875rem;margin:0">
+                  Das 13 linhas da página 9 do manual, doze caem exatamente na grade de
+                  7°. A décima segunda está <b>1,7° fora</b> — 79,6° onde a grade pede
+                  77,9°. É desvio do arquivo, não regra. Os assets usam a grade regular.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:2.5rem">Regras de aplicação</h3>
+        <div class="grid g2" style="gap:1.5rem">
+          <div class="frame">
+            <div class="frame__body">
+              <p class="eyebrow" style="margin-bottom:.75rem"><span>Pode</span></p>
+              <ul style="margin:0;padding-left:1.1rem;font-size:.9375rem;line-height:1.9">
+                <li>Origem em canto inferior, abrindo para cima</li>
+                <li>Espelhado para o canto inferior direito</li>
+                <li>Sobre Graphite ou Deep Violet</li>
+                <li>Ampliado e cortado pela moldura</li>
+              </ul>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="frame__body">
+              <p class="eyebrow" style="margin-bottom:.75rem"><span style="color:var(--c-bad)">Não pode</span></p>
+              <ul style="margin:0;padding-left:1.1rem;font-size:.9375rem;line-height:1.9">
+                <li>Sobre Ivory ou qualquer fundo claro</li>
+                <li>Sobre fotografia com muita informação</li>
+                <li>Número de raios diferente de 13</li>
+                <li>Passo angular irregular</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================= 06 TEMAS ========= -->
+      <section class="band" id="temas">
+        <p class="eyebrow"><span>06 · Temas</span><span class="eyebrow__en">Themes</span></p>
+        <h2 class="serif">O escuro é o institucional.</h2>
+        <p class="lede">
+          Graphite é o fundo institucional e 60% do sistema de cor, então o tema escuro
+          é o padrão. O claro é a exceção editorial — documento, leitura longa, papelaria.
+        </p>
+
+        <div class="grid g3">
+          <div class="frame">
+            <div class="spec spec--graphite on-dark" style="border-radius:0">
+              <p class="spec__label">Escuro · institucional</p>
+              <p style="font-weight:300;font-size:1.3rem;margin:0 0 .5rem">Título</p>
+              <p style="font-size:.875rem;color:#CAC7C2;margin:0 0 1rem">
+                Texto corrido em Ivory sobre Graphite. <a href="#temas" style="color:#A98BEF">Link em lilás.</a>
+              </p>
+              <button class="btn btn--primary btn--sm" type="button">Ação</button>
+            </div>
+            <p class="frame__cap">data-bv-theme="dark"<br>fundo #18171C</p>
+          </div>
+          <div class="frame">
+            <div class="spec spec--ivory on-light" style="border-radius:0">
+              <p class="spec__label">Claro · editorial</p>
+              <p style="font-weight:300;font-size:1.3rem;margin:0 0 .5rem">Título</p>
+              <p style="font-size:.875rem;color:#5C5A61;margin:0 0 1rem">
+                Texto corrido em Graphite sobre Ivory. <a href="#temas" style="color:#5B3FB0">Link em Lilac Ink.</a>
+              </p>
+              <button class="btn btn--primary btn--sm" type="button">Ação</button>
+            </div>
+            <p class="frame__cap">:root (padrão)<br>fundo #F8F7F2</p>
+          </div>
+          <div class="frame">
+            <div class="spec spec--violet on-dark" style="border-radius:0">
+              <p class="spec__label">Violeta · destaque</p>
+              <p style="font-weight:300;font-size:1.3rem;margin:0 0 .5rem">Título</p>
+              <p style="font-size:.875rem;color:#EAE4FA;margin:0 0 1rem">
+                Texto em Ivory sobre Deep Violet. <a href="#temas" style="color:#A98BEF">Link em lilás.</a>
+              </p>
+              <button class="btn btn--primary btn--sm" type="button">Ação</button>
+            </div>
+            <p class="frame__cap">data-bv-theme="violet"<br>fundo #302544</p>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:2rem">
+          <span class="note__tag">Regra</span>
+          <div>
+            <p style="font-size:.9375rem;margin:0">
+              <b>Deep Violet nunca no mesmo bloco que Graphite.</b> Use um ou o outro por
+              seção, nunca adjacentes sem separação. Os temas trocam só a camada
+              semântica — os componentes não mudam de classe.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================== 07 COMPONENTES ======== -->
+      <section class="band" id="componentes">
+        <p class="eyebrow"><span>07 · Componentes</span><span class="eyebrow__en">Components</span></p>
+        <h2 class="serif">Ângulo vivo, raio quase zero.</h2>
+        <p class="lede">
+          O símbolo tem vértice agudo e o feixe é reto. Por princípio, o raio de borda
+          é quase zero: 4 px é o máximo para superfície de interface. Cada componente
+          aparece abaixo nas duas superfícies.
+        </p>
+
+        <h3>Botões</h3>
+        <div class="grid g2" style="gap:1.5rem">
+          <div class="frame">
+            <div class="spec spec--graphite on-dark" style="border-radius:0">
+              <div class="row">
+                <button class="btn btn--primary" type="button">Primário</button>
+                <button class="btn btn--secondary" type="button">Secundário</button>
+                <button class="btn btn--ghost" type="button">Fantasma</button>
+              </div>
+              <div class="row" style="margin-top:.875rem">
+                <button class="btn btn--primary btn--sm" type="button">Pequeno</button>
+                <button class="btn btn--primary btn--lg" type="button">Grande</button>
+                <button class="btn btn--danger" type="button">Destrutivo</button>
+                <button class="btn btn--primary" type="button" disabled>Desabilitado</button>
+              </div>
+            </div>
+            <p class="frame__cap">sobre Graphite · ação = Belliv Lilac</p>
+          </div>
+          <div class="frame">
+            <div class="spec spec--ivory on-light" style="border-radius:0">
+              <div class="row">
+                <button class="btn btn--primary" type="button">Primário</button>
+                <button class="btn btn--secondary" type="button">Secundário</button>
+                <button class="btn btn--ghost" type="button">Fantasma</button>
+              </div>
+              <div class="row" style="margin-top:.875rem">
+                <button class="btn btn--primary btn--sm" type="button">Pequeno</button>
+                <button class="btn btn--primary btn--lg" type="button">Grande</button>
+                <button class="btn btn--danger" type="button">Destrutivo</button>
+                <button class="btn btn--primary" type="button" disabled>Desabilitado</button>
+              </div>
+            </div>
+            <p class="frame__cap">sobre Ivory · ação = Lilac Ink</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top:2.5rem">Formulário</h3>
+        <div class="grid g2" style="gap:1.5rem">
+          <div class="frame">
+            <div class="spec spec--graphite on-dark" style="border-radius:0">
+              <div class="field">
+                <label class="lbl" for="f1">Nome da empresa</label>
+                <input class="inp" id="f1" type="text" placeholder="Ex. Indústria Meridiano">
+              </div>
+              <div class="field">
+                <label class="lbl" for="f2">Setor de atuação</label>
+                <select class="inp" id="f2">
+                  <option>Indústria</option><option>Varejo</option><option>Serviços</option>
+                </select>
+                <span class="hint">Usado para calibrar o diagnóstico inicial.</span>
+              </div>
+              <div class="field">
+                <label class="lbl" for="f3">E-mail corporativo</label>
+                <input class="inp" id="f3" type="email" value="contato@" aria-invalid="true" aria-describedby="e3">
+                <span class="err" id="e3">Complete o domínio para receber o diagnóstico.</span>
+              </div>
+            </div>
+            <p class="frame__cap">Rótulo em caixa alta com tracking 0.1em · erro explica como resolver</p>
+          </div>
+          <div class="frame">
+            <div class="spec spec--ivory on-light" style="border-radius:0">
+              <div class="field">
+                <label class="lbl" for="f4">Nome da empresa</label>
+                <input class="inp" id="f4" type="text" placeholder="Ex. Indústria Meridiano">
+              </div>
+              <div class="field">
+                <label class="lbl" for="f5">Setor de atuação</label>
+                <select class="inp" id="f5">
+                  <option>Indústria</option><option>Varejo</option><option>Serviços</option>
+                </select>
+                <span class="hint">Usado para calibrar o diagnóstico inicial.</span>
+              </div>
+              <div class="field">
+                <label class="lbl" for="f6">E-mail corporativo</label>
+                <input class="inp" id="f6" type="email" value="contato@" aria-invalid="true" aria-describedby="e6">
+                <span class="err" id="e6">Complete o domínio para receber o diagnóstico.</span>
+              </div>
+            </div>
+            <p class="frame__cap">Mesmas classes, tema trocado</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top:2.5rem">Cards e alertas</h3>
+        <div class="grid g2" style="gap:1.5rem">
+          <div class="frame">
+            <div class="spec spec--graphite on-dark" style="border-radius:0">
+              <div class="dcard dcard--vector" style="margin-bottom:1rem">
+                <h4>Transformação de negócios tradicionais</h4>
+                <p>Estratégia aplicada à realidade da operação, não ao slide.</p>
+              </div>
+              <div class="alert a-in">
+                <span class="alert__t">Informação</span>
+                <span class="alert__b">O diagnóstico leva cerca de 12 dias úteis.</span>
+              </div>
+              <div class="alert a-ok">
+                <span class="alert__t">Sucesso</span>
+                <span class="alert__b">Diagnóstico enviado para o e-mail cadastrado.</span>
+              </div>
+              <div class="alert a-wn">
+                <span class="alert__t">Alerta</span>
+                <span class="alert__b">Dois campos ainda sem resposta.</span>
+              </div>
+              <div class="alert a-bd">
+                <span class="alert__t">Erro</span>
+                <span class="alert__b">Não foi possível salvar. Tente enviar de novo.</span>
+              </div>
+            </div>
+            <p class="frame__cap">Card com marcação de vetor no topo · alertas com fio de 2 px</p>
+          </div>
+          <div class="frame">
+            <div class="spec spec--ivory on-light" style="border-radius:0">
+              <div class="dcard dcard--vector" style="margin-bottom:1rem">
+                <h4>Transformação de negócios tradicionais</h4>
+                <p>Estratégia aplicada à realidade da operação, não ao slide.</p>
+              </div>
+              <div class="alert a-in">
+                <span class="alert__t">Informação</span>
+                <span class="alert__b">O diagnóstico leva cerca de 12 dias úteis.</span>
+              </div>
+              <div class="alert a-ok">
+                <span class="alert__t">Sucesso</span>
+                <span class="alert__b">Diagnóstico enviado para o e-mail cadastrado.</span>
+              </div>
+              <div class="alert a-wn">
+                <span class="alert__t">Alerta</span>
+                <span class="alert__b">Dois campos ainda sem resposta.</span>
+              </div>
+              <div class="alert a-bd">
+                <span class="alert__t">Erro</span>
+                <span class="alert__b">Não foi possível salvar. Tente enviar de novo.</span>
+              </div>
+            </div>
+            <p class="frame__cap">Cores de sistema trocam para as versões de superfície clara</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top:2.5rem">Navegação, tags e listas</h3>
+        <div class="grid g2" style="gap:1.5rem">
+          <div class="frame">
+            <div class="spec spec--graphite on-dark" style="border-radius:0;padding:0">
+              <div class="dnav">
+                <span class="wordmark" style="font-size:1rem">
+                  <span class="wordmark__name">Belliv</span>
+                </span>
+                <ul class="dnav__links">
+                  <li><a class="dnav__link" href="#componentes" aria-current="page">Estratégia</a></li>
+                  <li><a class="dnav__link" href="#componentes">Casos</a></li>
+                  <li><a class="dnav__link" href="#componentes">Contato</a></li>
+                </ul>
+              </div>
+              <div style="padding:1.75rem">
+                <div class="row" style="margin-bottom:1.25rem">
+                  <span class="tag" style="color:#A98BEF">Estratégica</span>
+                  <span class="tag" style="color:#5FC9AC">Ativo</span>
+                  <span class="tag" style="color:#E5B15C">Em análise</span>
+                  <span class="tag" style="color:#CAC7C2">Arquivado</span>
+                </div>
+                <ol class="idx">
+                  <li>Transformação de negócios tradicionais</li>
+                  <li>Estratégia aplicada à realidade da operação</li>
+                  <li>Criação de novas possibilidades de negócio</li>
+                </ol>
+              </div>
+            </div>
+            <p class="frame__cap">Numeração 01/02/03 só onde a ordem carrega informação</p>
+          </div>
+          <div class="frame">
+            <div class="spec spec--ivory on-light" style="border-radius:0;padding:0">
+              <div style="padding:1.75rem">
+                <div class="tbl-wrap" style="border:0">
+                  <table class="dtable">
+                    <thead><tr><th>Frente</th><th>Estágio</th><th class="num">Prazo</th></tr></thead>
+                    <tbody>
+                      <tr><td>Posicionamento</td><td><span class="tag" style="color:#1F6F5C">Ativo</span></td><td class="num">12 dias</td></tr>
+                      <tr><td>Arquitetura de marca</td><td><span class="tag" style="color:#8A5A12">Em análise</span></td><td class="num">28 dias</td></tr>
+                      <tr><td>Operação</td><td><span class="tag" style="color:#7C7A80">Arquivado</span></td><td class="num">—</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <ul class="rulelist" style="margin-top:1.5rem">
+                  <li>Evolução de marcas, produtos e processos.</li>
+                  <li>Implementação de estruturas que sustentam crescimento.</li>
+                </ul>
+              </div>
+            </div>
+            <p class="frame__cap">Tabela com números tabulares · lista separada por fio de 1 px</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================== 08 VERBAL ========== -->
+      <section class="band" id="verbal">
+        <p class="eyebrow"><span>08 · Território verbal</span><span class="eyebrow__en">Verbal territory</span></p>
+        <h2 class="serif">Afirmações claras, diretas e sofisticadas.</h2>
+
+        <div class="grid g3" style="align-items:start">
+          <div>
+            <h3>Assinatura institucional</h3>
+            <p style="font-weight:300;font-size:1.75rem;line-height:1.12;text-transform:uppercase;margin:0 0 1rem">
+              We Belliv<br><span style="color:var(--c-accent)">in Strategy.</span>
+            </p>
+            <p class="dim" style="font-size:.875rem">
+              Aparece em apresentações, materiais institucionais e pontos estratégicos
+              de contato. <b>Permanece em inglês em qualquer idioma.</b>
+            </p>
+            <h3 style="margin-top:1.75rem">Variações</h3>
+            <ul class="rulelist" style="font-size:.9375rem">
+              <li>We Belliv in New Possibilities.</li>
+              <li>We Belliv in What Comes Next.</li>
+              <li>We Belliv in Reinvention.</li>
+              <li>We Belliv in Moving Forward.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Frases de marca</h3>
+            <div class="spec spec--graphite" style="padding:1.75rem">
+              <p class="serif" style="font-size:1.2rem;line-height:1.35;margin:0 0 1rem">Estratégia para transformar o que já existe.</p>
+              <p class="serif" style="font-size:1.2rem;line-height:1.35;margin:0 0 1rem">Novas possibilidades nascem de novas perspectivas.</p>
+              <p class="serif" style="font-size:1.2rem;line-height:1.35;margin:0 0 1rem">O próximo negócio pode estar dentro do negócio que já existe.</p>
+              <p class="serif" style="font-size:1.2rem;line-height:1.35;margin:0">Estratégia ganha valor quando entra em movimento.</p>
+            </div>
+            <h3 style="margin-top:1.75rem">Princípio</h3>
+            <p style="font-size:.9375rem">
+              A BELLIV comunica com afirmações claras, diretas e sofisticadas. O discurso
+              valoriza possibilidades, movimento, inteligência e transformação.
+            </p>
+          </div>
+
+          <div>
+            <h3>Personalidade</h3>
+            <ul class="rulelist">
+              <li>
+                <span style="font-size:.6875rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--c-accent);display:block;margin-bottom:.2rem">Estratégica</span>
+                <span class="dim" style="font-size:.875rem">Pensa antes de agir e conecta visão à execução.</span>
+              </li>
+              <li>
+                <span style="font-size:.6875rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--c-accent);display:block;margin-bottom:.2rem">Visionária</span>
+                <span class="dim" style="font-size:.875rem">Enxerga possibilidades além da estrutura atual.</span>
+              </li>
+              <li>
+                <span style="font-size:.6875rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--c-accent);display:block;margin-bottom:.2rem">Precisa</span>
+                <span class="dim" style="font-size:.875rem">Comunica com clareza, objetividade e consistência.</span>
+              </li>
+              <li>
+                <span style="font-size:.6875rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--c-accent);display:block;margin-bottom:.2rem">Sofisticada</span>
+                <span class="dim" style="font-size:.875rem">Valoriza repertório, design e profundidade.</span>
+              </li>
+              <li>
+                <span style="font-size:.6875rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--c-accent);display:block;margin-bottom:.2rem">Contemporânea</span>
+                <span class="dim" style="font-size:.875rem">Traduz transformação sem perder relevância.</span>
+              </li>
+              <li>
+                <span style="font-size:.6875rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--c-accent);display:block;margin-bottom:.2rem">Catalisadora</span>
+                <span class="dim" style="font-size:.875rem">Converte potencial em movimento.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="margin-top:2.5rem">Direção de imagem</h3>
+        <div class="grid g2" style="gap:1.5rem">
+          <div class="frame">
+            <div class="frame__body">
+              <p class="eyebrow" style="margin-bottom:.75rem"><span>Buscar</span></p>
+              <p style="font-size:.9375rem;margin:0">
+                Arquitetura, tecnologia, detalhes materiais e ambientes contemporâneos.
+                Luz fria, alto contraste e sensação de movimento. Composição limpa,
+                <b>sem pessoas</b>.
+              </p>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="frame__body">
+              <p class="eyebrow" style="margin-bottom:.75rem"><span style="color:var(--c-bad)">Evitar</span></p>
+              <p style="font-size:.9375rem;margin:0">
+                Banco de imagens genérico, reuniões posadas, cores quentes saturadas e
+                composições sobrecarregadas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================== 09 TOKENS ========== -->
+      <section class="band" id="tokens">
+        <p class="eyebrow"><span>09 · Tokens</span><span class="eyebrow__en">Tokens</span></p>
+        <h2 class="serif">Referência rápida.</h2>
+        <p class="lede">
+          Os mesmos valores existem em três formatos: CSS custom properties, config
+          Tailwind e JSON. A folha CSS é a fonte da verdade.
+        </p>
+
+        <div class="grid g2" style="align-items:start">
+          <div>
+            <h3>Semânticos — o que você usa</h3>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Token</th><th>Escuro</th><th>Claro</th></tr></thead>
+                <tbody>
+                  <tr><td class="mono">--bv-surface</td><td class="num">Graphite</td><td class="num">Ivory</td></tr>
+                  <tr><td class="mono">--bv-surface-raised</td><td class="num">neutral-800</td><td class="num">#FFFFFF</td></tr>
+                  <tr><td class="mono">--bv-surface-brand</td><td class="num">Deep Violet</td><td class="num">Soft Lilac</td></tr>
+                  <tr><td class="mono">--bv-text</td><td class="num">Ivory</td><td class="num">Graphite</td></tr>
+                  <tr><td class="mono">--bv-text-muted</td><td class="num">neutral-300</td><td class="num">neutral-600</td></tr>
+                  <tr><td class="mono">--bv-text-brand</td><td class="num">Belliv Lilac</td><td class="num">Lilac Ink</td></tr>
+                  <tr><td class="mono">--bv-action</td><td class="num">Belliv Lilac</td><td class="num">Lilac Ink</td></tr>
+                  <tr><td class="mono">--bv-border</td><td class="num">neutral-800</td><td class="num">neutral-200</td></tr>
+                  <tr><td class="mono">--bv-focus-ring</td><td class="num">Belliv Lilac</td><td class="num">Lilac Ink</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h3>Espaço, geometria e movimento</h3>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Grupo</th><th>Valores</th></tr></thead>
+                <tbody>
+                  <tr><td>Espaço · base 4 px</td><td class="num wrap">4 · 8 · 12 · 16 · 24 · 32 · 40 · 48 · 64 · 80 · 96 · 128</td></tr>
+                  <tr><td>Raio</td><td class="num">0 · 2 · 4 px · pill 999</td></tr>
+                  <tr><td>Borda</td><td class="num">1 px (fio) · 2 px</td></tr>
+                  <tr><td>Duração</td><td class="num">120 · 200 · 420 ms</td></tr>
+                  <tr><td>Easing</td><td class="num">cubic-bezier(.2,0,.2,1)</td></tr>
+                  <tr><td>Container</td><td class="num">1216 px · leitura 704 px</td></tr>
+                  <tr><td>Colunas</td><td class="num">12</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 style="margin-top:1.75rem">Arquivos</h3>
+            <div class="tbl-wrap">
+              <table>
+                <tbody>
+                  <tr><td class="mono">tokens/belliv-tokens.css</td><td class="dim">fonte da verdade</td></tr>
+                  <tr><td class="mono">tokens/belliv-tokens.json</td><td class="dim">Figma, scripts</td></tr>
+                  <tr><td class="mono">tokens/tailwind.config.js</td><td class="dim">Tailwind v3 e v4</td></tr>
+                  <tr><td class="mono">css/belliv-components.css</td><td class="dim">componentes</td></tr>
+                  <tr><td class="mono">assets/*.svg</td><td class="dim">símbolo e feixe</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:2.5rem">Aplicando o tema</h3>
+<pre><i>&lt;!-- escuro: o padrão institucional --&gt;</i>
+&lt;section <b>data-bv-theme="dark"</b> class="bv-section"&gt;
+  &lt;p class="<b>bv-eyebrow</b>"&gt;Território estratégico&lt;/p&gt;
+  &lt;h2 class="<b>bv-display</b>"&gt;Estratégia para transformar o que já existe.&lt;/h2&gt;
+  &lt;button class="<b>bv-btn bv-btn--primary</b>"&gt;Falar com a Belliv&lt;/button&gt;
+&lt;/section&gt;
+
+<i>&lt;!-- violeta: superfície de destaque. Nunca ao lado de Graphite. --&gt;</i>
+&lt;section <b>data-bv-theme="violet"</b> class="bv-section bv-fan"&gt;…&lt;/section&gt;</pre>
+      </section>
+
+      <!-- ========================================= 10 DECISÕES ========== -->
+      <section class="band" id="decisoes">
+        <p class="eyebrow"><span>10 · Decisões</span><span class="eyebrow__en">Decisions &amp; extensions</span></p>
+        <h2 class="serif">O que veio do manual e o que foi criado.</h2>
+        <p class="lede">
+          O manual cobre marca. Um design system precisa cobrir interface. Onde faltou
+          definição, a escolha está registrada — para você aprovar, mudar ou vetar.
+        </p>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Item</th><th>Situação</th><th>Decisão</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Escala violeta 50–950</td>
+                <td><span class="pill" style="color:var(--c-accent)">Extensão</span></td>
+                <td>Derivada das quatro cores oficiais, que ocupam as posições 100, 400, 700 e 900. As oficiais não foram alteradas.</td>
+              </tr>
+              <tr>
+                <td>Escala neutra 0–950</td>
+                <td><span class="pill" style="color:var(--c-accent)">Extensão</span></td>
+                <td>Ivory na 50, Graphite na 900. Ponta clara quente (papel), ponta escura fria (tinta).</td>
+              </tr>
+              <tr>
+                <td>Cores de sistema</td>
+                <td><span class="pill" style="color:var(--c-accent)">Extensão</span></td>
+                <td>Frias e dessaturadas, todas AA na superfície de destino. Uso restrito a feedback de sistema.</td>
+              </tr>
+              <tr>
+                <td>Escala tipográfica</td>
+                <td><span class="pill" style="color:var(--c-accent)">Extensão</span></td>
+                <td>Razão 1.25, base 16 px. O manual define famílias e pesos, não tamanhos.</td>
+              </tr>
+              <tr>
+                <td>Escala de espaço</td>
+                <td><span class="pill" style="color:var(--c-accent)">Extensão</span></td>
+                <td>Base 4 px, doze passos.</td>
+              </tr>
+              <tr>
+                <td>Raio de borda</td>
+                <td><span class="pill" style="color:var(--c-accent)">Extensão</span></td>
+                <td>Máximo 4 px, derivado do princípio de ângulo vivo do símbolo.</td>
+              </tr>
+              <tr>
+                <td>Geometria do símbolo e do feixe</td>
+                <td><span class="pill pill--aa">Medido</span></td>
+                <td>O manual descreve em palavras; os números foram medidos no PDF e a construção conferida contra o original.</td>
+              </tr>
+              <tr>
+                <td>Lilás sobre Ivory</td>
+                <td><span class="pill pill--fail">Conflito</span></td>
+                <td>O manual autoriza para títulos ≥ 40 px; mede 2.57:1 e reprova em WCAG. Marcado como decorativo. Ver <a href="#cor">seção 02</a>.</td>
+              </tr>
+              <tr>
+                <td>12ª linha do feixe</td>
+                <td><span class="pill pill--fail">Conflito</span></td>
+                <td>Está 1,7° fora da grade de 7° no arquivo original. Os assets usam a grade regular.</td>
+              </tr>
+              <tr>
+                <td>Wordmark vetorizado</td>
+                <td><span class="pill pill--lg">Pendente</span></td>
+                <td>Manrope não estava instalada na máquina; o wordmark ficou como lockup tipográfico. Precisa virar curvas.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-top:2.5rem">O que ainda falta decidir</h3>
+        <div class="grid g3">
+          <div class="frame"><div class="frame__body">
+            <h4 style="font-size:1rem">Vetorizar o wordmark</h4>
+            <p class="dim" style="font-size:.875rem;margin:0">
+              Instale a Manrope, abra o lockup em ferramenta de design e converta em
+              curvas. Enquanto isso, o logotipo depende da fonte carregar.
+            </p>
+          </div></div>
+          <div class="frame"><div class="frame__body">
+            <h4 style="font-size:1rem">Sistema de ícones</h4>
+            <p class="dim" style="font-size:.875rem;margin:0">
+              O manual não define. Recomendo traço de 1,5 px, terminais retos e cantos
+              vivos, para acompanhar o feixe e o símbolo.
+            </p>
+          </div></div>
+          <div class="frame"><div class="frame__body">
+            <h4 style="font-size:1rem">Paleta para dados</h4>
+            <p class="dim" style="font-size:.875rem;margin:0">
+              Gráficos precisam de cores categóricas que se distingam entre si. A escala
+              violeta sozinha não separa séries o suficiente.
+            </p>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- ============================================== RODAPÉ ========== -->
+      <footer class="band" style="padding-bottom:5rem">
+        <div class="spec spec--graphite foot" style="padding:clamp(2.5rem,6vw,4rem)">
+          <canvas class="foot__canvas" id="fanfoot" aria-hidden="true"></canvas>
+          <div class="foot__body">
+            <span class="wordmark" style="font-size:clamp(1.75rem,4vw,2.75rem)">
+              <span class="wordmark__name">Belliv</span>
+              <span class="wordmark__desc">Strategy</span>
+            </span>
+            <p class="serif" style="font-size:clamp(1.1rem,2.2vw,1.5rem);color:#EAE4FA;margin:1.75rem 0 0">
+              Strategy creates what comes next.
+            </p>
+            <p style="font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:#A5A2A6;margin:2.5rem 0 0">
+              Design system v1.0 · derivado do Manual da Marca Belliv 2026 · documento interno
+            </p>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------------------------------------------------------
+     FEIXE BELLIV — construção medida no manual (§07)
+     13 raios de MESMO comprimento, origem em canto inferior,
+     primeiro a 1° da vertical, passo constante de 7°, último a 85°.
+     Opacidade 100% na origem → 40% na ponta.
+     --------------------------------------------------------------- */
+  var RAYS = 13, FIRST = 1, STEP = 7, LILAC = '169,139,239';
+
+  function drawFan(canvas, opts) {
+    var cfg = opts || {};
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var rect = canvas.getBoundingClientRect();
+    var w = Math.max(1, Math.round(rect.width));
+    var h = Math.max(1, Math.round(cfg.square ? rect.width : rect.height));
+    if (cfg.square) { canvas.style.height = w + 'px'; }
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+
+    var ctx = canvas.getContext('2d');
+    if (!ctx) { return; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    /* origem: canto inferior, com recuo quando as pontas devem aparecer */
+    var pad = cfg.square ? Math.round(w * 0.05) : 0;
+    var ox = cfg.mirror ? w - pad : pad;
+    var oy = h - pad;
+
+    /* comprimento comum dos 13 raios */
+    var len = cfg.square
+      ? (Math.min(w, h) - pad * 2) * 0.95      /* referência: pontas visíveis */
+      : Math.hypot(w, h) * 1.35;               /* aplicação: cortado pela moldura */
+
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'butt';
+
+    for (var i = 0; i < RAYS; i++) {
+      var a = (FIRST + STEP * i) * Math.PI / 180;
+      var dx = Math.sin(a) * len * (cfg.mirror ? -1 : 1);
+      var dy = -Math.cos(a) * len;
+      var x2 = ox + dx, y2 = oy + dy;
+
+      var grad = ctx.createLinearGradient(ox, oy, x2, y2);
+      grad.addColorStop(0, 'rgba(' + LILAC + ',1)');
+      grad.addColorStop(1, 'rgba(' + LILAC + ',0.4)');
+
+      ctx.strokeStyle = grad;
+      ctx.beginPath();
+      ctx.moveTo(ox, oy);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+  }
+
+  var targets = [
+    { el: document.getElementById('fan'),     opts: {} },
+    { el: document.getElementById('fanref'),  opts: { square: true } },
+    { el: document.getElementById('fanfoot'), opts: { mirror: true } }
+  ];
+
+  function renderAll() {
+    targets.forEach(function (t) { if (t.el) { drawFan(t.el, t.opts); } });
+  }
+
+  renderAll();
+
+  var raf;
+  window.addEventListener('resize', function () {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(renderAll);
+  });
+
+  /* fontes podem mudar a métrica do hero: redesenha quando carregarem */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(renderAll);
+  }
+
+  /* ---------------------------------------------------------------
+     Alternar tema — escreve data-theme, que vence a preferência do SO
+     --------------------------------------------------------------- */
+  var btn = document.getElementById('themebtn');
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var root = document.documentElement;
+      var current = root.getAttribute('data-theme');
+      if (!current) {
+        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        current = systemDark ? 'dark' : 'light';
+      }
+      var next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      btn.textContent = next === 'dark' ? 'Tema escuro' : 'Tema claro';
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     Marca a seção visível no rail
+     --------------------------------------------------------------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.rail__link'));
+  var sections = links
+    .map(function (a) { return document.querySelector(a.getAttribute('href')); })
+    .filter(Boolean);
+
+  if ('IntersectionObserver' in window && sections.length) {
+    var visible = new Map();
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { visible.set(e.target.id, e.isIntersecting ? e.intersectionRatio : 0); });
+      var bestId = null, bestRatio = 0;
+      visible.forEach(function (ratio, id) { if (ratio > bestRatio) { bestRatio = ratio; bestId = id; } });
+      links.forEach(function (a) {
+        a.classList.toggle('is-active', bestId !== null && a.getAttribute('href') === '#' + bestId);
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: [0, 0.25, 0.5, 1] });
+    sections.forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
+
+</body>
+</html>
