@@ -37,6 +37,15 @@ const DEV = process.env.NODE_ENV !== 'production';
  */
 const STATIC_DIRS = ['/design-system', '/public'];
 
+/**
+ * Caminhos bloqueados mesmo estando dentro de um diretório servido.
+ * Espelha as regras do .htaccess, para o comportamento não mudar com o host.
+ *
+ * O JSON de tokens carrega o território verbal e a personalidade da marca; a
+ * página consome os tokens em CSS e não precisa dele.
+ */
+const DENY = [/^\/design-system\/tokens\/belliv-tokens\.json$/];
+
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -88,11 +97,10 @@ function resolveStatic(urlPath) {
   );
   if (!dir) return null;
 
-  // /public/x -> src/public/x   ·   /design-system/x -> design-system/x
-  const rel = dir === '/public'
-    ? join('src', 'public', urlPath.slice(dir.length))
-    : join(dir.slice(1), urlPath.slice(dir.length));
-
+  // Os diretórios servidos ficam na raiz do projeto e os caminhos batem 1:1
+  // com a URL. É isso que permite servir o mesmo site por Apache, onde a raiz
+  // do repositório é a raiz web.
+  const rel = join(dir.slice(1), urlPath.slice(dir.length));
   const filePath = resolve(join(ROOT, normalize(rel)));
 
   // barreira contra path traversal: tem de continuar dentro de ROOT
@@ -171,6 +179,21 @@ const server = createServer(async (req, res) => {
         'Content-Type': 'text/html; charset=utf-8',
         'Cache-Control': DEV ? 'no-store' : 'public, max-age=300'
       });
+    }
+
+    if (urlPath === '/robots.txt') {
+      const robots = await readFile(join(ROOT, 'robots.txt'), 'utf8').catch(() => null);
+      if (robots) {
+        return send(res, 200, robots, {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Cache-Control': 'public, max-age=3600'
+        });
+      }
+    }
+
+    if (DENY.some((re) => re.test(urlPath))) {
+      const denied = await view('404.html');
+      return send(res, 404, denied, { 'Content-Type': 'text/html; charset=utf-8' });
     }
 
     const filePath = resolveStatic(urlPath);

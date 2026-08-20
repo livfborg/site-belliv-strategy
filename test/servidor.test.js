@@ -93,6 +93,30 @@ test('path traversal é bloqueado', async () => {
   }
 });
 
+test('os estáticos da página são servidos em /public', async () => {
+  for (const [p, tipo] of [
+    ['/public/css/pagina.css', /text\/css/],
+    ['/public/js/pagina.js', /javascript/],
+    ['/public/favicon.svg', /image\/svg/]
+  ]) {
+    const r = await fetch(`${base}${p}`);
+    assert.equal(r.status, 200, `${p} deveria existir`);
+    assert.match(r.headers.get('content-type'), tipo);
+  }
+});
+
+test('/robots.txt é servido e protege os caminhos internos', async () => {
+  const r = await fetch(`${base}/robots.txt`);
+  assert.equal(r.status, 200);
+  const txt = await r.text();
+  assert.match(txt, /Disallow: \/docs\//);
+});
+
+test('o JSON de tokens é bloqueado: carrega território verbal', async () => {
+  const r = await fetch(`${base}/design-system/tokens/belliv-tokens.json`);
+  assert.equal(r.status, 404);
+});
+
 test('POST é rejeitado com 405', async () => {
   const r = await fetch(`${base}/`, { method: 'POST' });
   assert.equal(r.status, 405);
@@ -105,3 +129,28 @@ test('cabeçalhos de segurança presentes', async () => {
   assert.equal(h.get('x-frame-options'), 'DENY');
   assert.match(h.get('content-security-policy'), /default-src 'self'/);
 });
+
+/**
+ * O deploy por Git da Hostinger só faz pull: não roda build. Então os arquivos
+ * gerados na raiz têm de estar versionados E em sincronia com src/views/.
+ * Sem esta guarda, uma edição no template subiria sem efeito no site.
+ */
+test('o build estático está em sincronia com src/views', async () => {
+  const { PAGES, buildPage } = await import('../build.js');
+  const { readFile } = await import('node:fs/promises');
+
+  for (const page of PAGES) {
+    const esperado = await buildPage(page, { contactEmail: '', year: ANO_FIXO });
+    const atual = await readFile(new URL(`../${page.to}`, import.meta.url), 'utf8');
+
+    // o ano é dinâmico; compara ignorando-o
+    const normaliza = (h) => h.replace(/\b20\d\d\b/g, 'ANO');
+    assert.equal(
+      normaliza(atual),
+      normaliza(esperado),
+      `${page.to} está desatualizado. Rode: npm run build`
+    );
+  }
+});
+
+const ANO_FIXO = 2026;

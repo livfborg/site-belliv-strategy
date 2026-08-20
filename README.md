@@ -12,7 +12,8 @@ Precisa de **Node 20 ou mais novo**. Não há dependências — não existe
 ```bash
 npm start          # produção, porta 3000
 npm run dev        # recarrega ao salvar
-npm test           # 13 testes de fumaça
+npm run build      # gera os HTML estáticos da raiz
+npm test           # 17 testes
 ```
 
 Abra <http://localhost:3000>.
@@ -29,20 +30,26 @@ Abra <http://localhost:3000>.
 ## Estrutura
 
 ```
+index.html                 GERADO por npm run build — não edite
+404.html                   GERADO por npm run build — não edite
+.htaccess                  regras Apache (hospedagem compartilhada)
+robots.txt
 server.js                  servidor HTTP, só biblioteca padrão do Node
+build.js                   gera os HTML estáticos a partir de src/views/
 package.json               scripts e engines. Zero dependências.
-src/
-├── views/
-│   ├── index.html         página de construção
-│   └── 404.html           erro 404 com a marca
-└── public/
-    ├── css/pagina.css     estilo da página (só tokens, nenhum valor cru)
-    ├── js/pagina.js       monta o feixe no fundo
-    └── favicon.svg        símbolo V da marca
+src/views/
+├── index.html             FONTE da página de construção
+└── 404.html               FONTE do erro 404
+public/
+├── css/pagina.css         estilo da página (só tokens, nenhum valor cru)
+├── js/pagina.js           monta o feixe no fundo
+└── favicon.svg            símbolo V da marca
 design-system/             o design system (ver seção abaixo)
-docs/index.html            documentação visual do design system
-test/servidor.test.js      testes
+docs/index.html            documentação visual — NÃO servida na web
+test/servidor.test.js      17 testes
 ```
+
+Os HTML da raiz são **gerados**. Edite `src/views/` e rode `npm run build`.
 
 ### Rotas
 
@@ -123,14 +130,58 @@ Instale antes de abrir qualquer arquivo de design. As duas são gratuitas:
 - [Manrope](https://fonts.google.com/specimen/Manrope) — principal
 - [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif) — destaque
 
-## Publicar
+## Publicar na Hostinger
 
-A aplicação é um servidor Node comum: sobe em Render, Railway, Fly.io, Heroku,
-App Engine ou qualquer container. Comando de start `npm start`, health check em
-`/health`, e a porta vem de `PORT`.
+O repositório funciona nos dois modos de hospedagem da Hostinger. **A diferença
+importa**: em plano compartilhado o `server.js` não roda.
 
-Não serve em Vercel/Netlify como função serverless sem adaptação — mas para uma
-página de construção, o mais simples é o servidor Node como está.
+### Hospedagem compartilhada (Premium, Business, Cloud)
+
+É Apache servindo arquivos. Não existe runtime Node — `server.js` fica no
+repositório mas nunca executa. O site é servido pelos **arquivos estáticos**
+`index.html` e `404.html` da raiz, e pelo `.htaccess`.
+
+No hPanel: **Avançado › Git**, aponte para o repositório, branch `main`, e defina
+o diretório de instalação como **`public_html`**. A raiz do repositório passa a
+ser a raiz web — é para isso que a estrutura está montada, com `/public/*` e
+`/design-system/*` batendo 1:1 com a URL.
+
+Como o deploy só faz `git pull` e não roda build, **`index.html` e `404.html`
+são versionados**. Depois de editar qualquer coisa em `src/views/`:
+
+```bash
+npm run build      # regenera index.html e 404.html
+git commit -am "..." && git push
+```
+
+`npm test` falha se você esquecer o build, então o erro não passa em silêncio.
+
+**Ative o SSL antes de forçar HTTPS.** O redirecionamento está comentado no fim
+do `.htaccess`. Ligar antes do certificado existir gera loop e tira o site do
+ar.
+
+### VPS
+
+Aí sim o Node roda. `npm start`, health check em `/health`, porta em `PORT`.
+Use um gerenciador de processo (systemd, pm2) e um proxy reverso na frente.
+Nesse modo o `.htaccess` é ignorado e quem aplica as regras é o `server.js`.
+
+### O que o `.htaccess` protege
+
+Em deploy por Git o repositório **inteiro** vira raiz web. Sem as regras, isto
+ficaria público em `https://seudominio/`:
+
+| Caminho | Por que precisa bloquear |
+|---|---|
+| `docs/` | Documentação interna da marca: posicionamento, território verbal |
+| `design-system/tokens/belliv-tokens.json` | Carrega o território verbal e a personalidade |
+| `src/`, `test/` | Fonte dos templates e testes |
+| `server.js`, `build.js`, `package.json` | Código e metadados |
+| `*.md` | READMEs |
+
+Verificado com Apache real: todos devolvem 403 ou 404. Se algum dia mudar de
+host, **confira isso antes de apontar o domínio** — a proteção depende do
+servidor honrar o `.htaccess`.
 
 ## Pontos abertos
 

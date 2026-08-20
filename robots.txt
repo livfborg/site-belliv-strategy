@@ -1,0 +1,10 @@
+# BELLIV Strategy
+# A página de construção pode ser indexada. O resto do repositório, não —
+# em deploy por Git o repositório inteiro vira raiz web.
+
+User-agent: *
+Allow: /$
+Disallow: /docs/
+Disallow: /src/
+Disallow: /test/
+Disallow: /design-system/
