@@ -1,0 +1,536 @@
+/* ==========================================================================
+   BELLIV STRATEGY · site institucional
+   Só usa tokens do design system. Nenhum valor de cor ou de tipo cru aqui.
+
+   A página alterna Graphite, Ivory e Deep Violet por seção. A regra do manual
+   diz que Deep Violet nunca aparece no mesmo bloco que Graphite, então há
+   sempre uma seção Ivory entre as duas — inclusive a barra de navegação, que
+   assume a cor da seção que está atrás dela.
+   ========================================================================== */
+
+/* O fundo do body só aparece na área da barra de rolagem e no overscroll.
+   A página abre no hero e termina no rodapé, os dois Graphite — então é essa
+   a cor certa aqui, e não o Ivory que o :root traz por padrão.
+   color-scheme faz a barra de rolagem acompanhar. */
+.site {
+  overflow-x: hidden;
+  background-color: var(--bv-graphite);
+  color-scheme: dark;
+}
+
+/* Link de salto: invisível até receber foco pelo teclado. */
+.pular {
+  position: absolute;
+  left: var(--bv-space-4);
+  top: -4rem;
+  z-index: 100;
+  padding: var(--bv-space-3) var(--bv-space-4);
+  background: var(--bv-lilac);
+  color: var(--bv-graphite);
+  font-size: var(--bv-text-sm);
+  font-weight: var(--bv-weight-semibold);
+  letter-spacing: var(--bv-tracking-wide);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--bv-radius-sm);
+  transition: top var(--bv-duration-base) var(--bv-ease);
+}
+.pular:focus { top: var(--bv-space-4); }
+
+/* --------------------------------------------------------------- SEÇÕES */
+.secao {
+  background-color: var(--bv-surface);
+  color: var(--bv-text);
+  padding-block: clamp(var(--bv-space-9), 10vw, var(--bv-space-12));
+}
+
+.conteiner {
+  width: 100%;
+  max-width: var(--bv-container);
+  margin-inline: auto;
+  padding-inline: clamp(var(--bv-space-5), 6vw, var(--bv-space-11));
+}
+
+/* Numeração do rótulo de seção: a ordem das seções é o percurso do serviço,
+   do diagnóstico à entrega, então o número carrega informação. */
+.olho__num {
+  font-family: var(--bv-font-mono);
+  font-size: 0.9em;
+  opacity: 0.6;
+  margin-right: var(--bv-space-1);
+}
+
+.titulo-secao {
+  max-width: 30ch;
+  margin-bottom: var(--bv-space-5);
+}
+
+.lede {
+  max-width: 56ch;
+  font-size: var(--bv-text-lg);
+  line-height: var(--bv-leading-relaxed);
+  color: var(--bv-text-muted);
+  margin: 0 0 var(--bv-space-8);
+}
+
+.nota {
+  max-width: 62ch;
+  margin: var(--bv-space-7) 0 0;
+  padding-top: var(--bv-space-5);
+  border-top: var(--bv-border-hairline) solid var(--bv-border);
+  font-size: var(--bv-text-sm);
+  color: var(--bv-text-muted);
+}
+
+/* Rótulo de grupo dentro de uma seção. */
+.grupo__titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--bv-space-4);
+  margin: var(--bv-space-9) 0 var(--bv-space-5);
+  font-size: var(--bv-text-xs);
+  font-weight: var(--bv-weight-semibold);
+  letter-spacing: var(--bv-tracking-wider);
+  text-transform: uppercase;
+  color: var(--bv-text-brand);
+}
+.grupo__titulo::after {
+  content: "";
+  flex: 1;
+  height: 0;
+  border-top: var(--bv-border-hairline) solid var(--bv-border);
+}
+/* Sem margem no topo apenas quando o rótulo vem logo depois do texto de
+   abertura da seção. `:first-of-type` estava errado aqui: casava com o
+   primeiro h3 irmão, zerando a margem de rótulos que vêm depois de cartões. */
+.titulo-secao + .grupo__titulo,
+.lede + .grupo__titulo { margin-top: 0; }
+
+/* ----------------------------------------------------------- NAVEGAÇÃO */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  /* background-color, não o shorthand `background`: o tema desta barra muda
+     por JS em tempo de rolagem, e no WebKit o shorthand com var() não
+     re-resolve quando a custom property muda depois do carregamento. */
+  background-color: var(--bv-surface);
+  color: var(--bv-text);
+  border-bottom: var(--bv-border-hairline) solid var(--bv-border);
+  transition: background-color var(--bv-duration-base) var(--bv-ease),
+              color var(--bv-duration-base) var(--bv-ease),
+              border-color var(--bv-duration-base) var(--bv-ease);
+}
+
+.topo__faixa {
+  width: 100%;
+  max-width: var(--bv-container);
+  margin-inline: auto;
+  padding: var(--bv-space-4) clamp(var(--bv-space-5), 6vw, var(--bv-space-11));
+  display: flex;
+  align-items: center;
+  gap: var(--bv-space-6);
+}
+
+.topo__marca {
+  color: inherit;
+  text-decoration: none;
+  flex: none;
+  font-size: 1.05rem;
+}
+
+.topo__nav {
+  display: flex;
+  gap: var(--bv-space-6);
+  margin-left: auto;
+}
+
+.topo__link {
+  font-size: var(--bv-text-xs);
+  font-weight: var(--bv-weight-semibold);
+  letter-spacing: var(--bv-tracking-wide);
+  text-transform: uppercase;
+  color: var(--bv-text-muted);
+  text-decoration: none;
+  padding-bottom: var(--bv-space-1);
+  border-bottom: var(--bv-border-thick) solid transparent;
+  transition: color var(--bv-duration-base) var(--bv-ease),
+              border-color var(--bv-duration-base) var(--bv-ease);
+}
+.topo__link:hover { color: var(--bv-text); }
+.topo__link.is-atual {
+  color: var(--bv-text-brand);
+  border-bottom-color: var(--bv-border-brand);
+}
+
+.topo__cta { flex: none; }
+
+/* ----------------------------------------------------------------- HERO */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bv-surface);
+  color: var(--bv-text);
+  isolation: isolate;
+}
+
+.hero__feixe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* O manual proíbe o feixe sobre conteúdo com muita informação. Este véu
+   preserva o grafismo e mantém o texto legível: mesma cor da superfície,
+   dissolvendo na direção em que o leque abre. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(96deg,
+    var(--bv-graphite) 0%,
+    rgb(24 23 28 / 0.88) 34%,
+    rgb(24 23 28 / 0.42) 56%,
+    transparent 76%);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--bv-container);
+  margin-inline: auto;
+  padding: clamp(var(--bv-space-10), 13vh, var(--bv-space-12))
+           clamp(var(--bv-space-5), 6vw, var(--bv-space-11));
+}
+
+.hero__olho { margin-bottom: var(--bv-space-5); }
+
+.hero__titulo {
+  max-width: 24ch;
+  font-size: clamp(2.4rem, 7vw, var(--bv-text-6xl));
+  margin-bottom: var(--bv-space-4);
+}
+
+.hero__traducao { margin-bottom: var(--bv-space-6); }
+
+.hero__lede {
+  max-width: 46ch;
+  font-size: var(--bv-text-lg);
+  line-height: var(--bv-leading-relaxed);
+  color: var(--bv-text-muted);
+  margin: 0 0 var(--bv-space-8);
+}
+
+.hero__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bv-space-3);
+  margin-bottom: clamp(var(--bv-space-9), 9vh, var(--bv-space-11));
+}
+
+.hero__assinatura {
+  font-size: clamp(var(--bv-text-lg), 2.6vw, var(--bv-text-2xl));
+  margin: 0;
+}
+
+/* -------------------------------------------------------------- COLUNAS */
+.colunas {
+  display: grid;
+  gap: var(--bv-space-7);
+}
+.colunas--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.coluna > p {
+  margin: 0;
+  color: var(--bv-text-muted);
+  font-size: var(--bv-text-base);
+  line-height: var(--bv-leading-relaxed);
+}
+
+.coluna__titulo {
+  margin: 0 0 var(--bv-space-3);
+  padding-top: var(--bv-space-4);
+  border-top: var(--bv-border-thick) solid var(--bv-border-brand);
+  font-size: var(--bv-text-xs);
+  font-weight: var(--bv-weight-semibold);
+  letter-spacing: var(--bv-tracking-wider);
+  text-transform: uppercase;
+  color: var(--bv-text-brand);
+}
+
+/* Coluna editorial + lista de apoio, o par de colunas do manual. */
+.dupla {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(var(--bv-space-7), 6vw, var(--bv-space-10));
+  align-items: start;
+}
+.dupla__editorial .lede { margin-bottom: 0; }
+
+/* -------------------------------------------------------------- CARTÕES */
+.cartoes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--bv-space-4);
+}
+.cartoes--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bv-space-2);
+  padding: var(--bv-space-5);
+  background: var(--bv-surface-raised);
+  border: var(--bv-border-hairline) solid var(--bv-border);
+  border-top: var(--bv-border-thick) solid var(--bv-border-brand);
+  border-radius: var(--bv-radius-md);
+}
+
+/* Alternância de superfície entre cartões, como no material da marca. */
+.cartao--marca {
+  background: var(--bv-surface-brand);
+  border-color: transparent;
+  border-top-color: var(--bv-border-brand);
+}
+
+.cartao--vetor { background: var(--bv-surface-raised); }
+
+.cartao__titulo {
+  margin: 0;
+  font-size: var(--bv-text-lg);
+  font-weight: var(--bv-weight-light);
+  line-height: var(--bv-leading-snug);
+}
+
+.cartao__texto {
+  margin: 0;
+  font-size: var(--bv-text-sm);
+  line-height: var(--bv-leading-relaxed);
+  color: var(--bv-text-muted);
+}
+
+/* --------------------------------------------------------------- PASSOS */
+.passos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: passo;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--bv-space-7) clamp(var(--bv-space-7), 6vw, var(--bv-space-10));
+}
+
+.passo {
+  counter-increment: passo;
+  padding-top: var(--bv-space-4);
+  border-top: var(--bv-border-hairline) solid var(--bv-border);
+}
+.passo::before {
+  content: counter(passo, decimal-leading-zero);
+  display: block;
+  margin-bottom: var(--bv-space-2);
+  font-family: var(--bv-font-mono);
+  font-size: var(--bv-text-sm);
+  color: var(--bv-text-brand);
+}
+
+.passo__titulo {
+  margin: 0 0 var(--bv-space-2);
+  font-size: var(--bv-text-xl);
+  font-weight: var(--bv-weight-light);
+  line-height: var(--bv-leading-snug);
+}
+
+.passo__texto {
+  margin: 0;
+  font-size: var(--bv-text-base);
+  line-height: var(--bv-leading-relaxed);
+  color: var(--bv-text-muted);
+}
+
+/* ------------------------------------------------------------- RECURSOS */
+.recursos { margin: 0; }
+
+.recurso {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: var(--bv-space-4) var(--bv-space-6);
+  padding-block: var(--bv-space-5);
+  border-bottom: var(--bv-border-hairline) solid var(--bv-border);
+}
+.recurso:first-child { border-top: var(--bv-border-hairline) solid var(--bv-border); }
+
+.recurso__nome {
+  margin: 0;
+  font-size: var(--bv-text-sm);
+  font-weight: var(--bv-weight-semibold);
+  letter-spacing: var(--bv-tracking-wide);
+}
+
+.recurso__desc {
+  margin: 0;
+  font-size: var(--bv-text-base);
+  line-height: var(--bv-leading-relaxed);
+  color: var(--bv-text-muted);
+}
+
+/* ------------------------------------------------------------ MANIFESTO */
+.manifesto { text-align: left; }
+
+.manifesto__frase {
+  max-width: 34ch;
+  margin: 0 0 var(--bv-space-5);
+  font-size: clamp(1.9rem, 5.5vw, var(--bv-text-5xl));
+  line-height: var(--bv-leading-tight);
+  letter-spacing: var(--bv-tracking-tight);
+}
+.manifesto__frase em {
+  font-style: italic;
+  color: var(--bv-text-brand);
+}
+
+.manifesto__apoio {
+  max-width: 44ch;
+  margin: 0;
+  font-family: var(--bv-font-serif);
+  font-size: clamp(var(--bv-text-lg), 2.4vw, var(--bv-text-xl));
+  color: var(--bv-text-muted);
+}
+
+/* -------------------------------------------------------------- CANAIS */
+.canais {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.canal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bv-space-1);
+  padding-block: var(--bv-space-4);
+  border-bottom: var(--bv-border-hairline) solid var(--bv-border);
+}
+.canal:first-child { border-top: var(--bv-border-hairline) solid var(--bv-border); }
+
+.canal__rotulo {
+  font-size: var(--bv-text-xs);
+  font-weight: var(--bv-weight-semibold);
+  letter-spacing: var(--bv-tracking-wider);
+  text-transform: uppercase;
+  color: var(--bv-text-subtle);
+}
+
+.canal__valor {
+  font-size: var(--bv-text-lg);
+  color: var(--bv-text-brand);
+  text-decoration: none;
+  transition: opacity var(--bv-duration-base) var(--bv-ease);
+}
+.canal__valor:hover { opacity: 0.7; }
+
+/* -------------------------------------------------------------- RODAPÉ */
+.rodape {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bv-surface);
+  color: var(--bv-text);
+  isolation: isolate;
+}
+
+.rodape__feixe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.rodape::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(84deg,
+    var(--bv-graphite) 0%,
+    rgb(24 23 28 / 0.90) 36%,
+    rgb(24 23 28 / 0.44) 58%,
+    transparent 78%);
+}
+
+.rodape__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--bv-container);
+  margin-inline: auto;
+  padding: clamp(var(--bv-space-9), 9vw, var(--bv-space-11))
+           clamp(var(--bv-space-5), 6vw, var(--bv-space-11));
+}
+
+.rodape__marca {
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  margin-bottom: var(--bv-space-7);
+}
+
+.rodape__frase {
+  font-size: clamp(var(--bv-text-lg), 2.4vw, var(--bv-text-2xl));
+  color: var(--bv-soft-lilac);
+  margin: 0 0 var(--bv-space-8);
+  max-width: 30ch;
+}
+
+.rodape__meta {
+  font-family: var(--bv-font-mono);
+  font-size: var(--bv-text-xs);
+  letter-spacing: var(--bv-tracking-wide);
+  text-transform: uppercase;
+  color: var(--bv-text-subtle);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------- RESPONSIVO */
+@media (max-width: 1040px) {
+  .topo__nav { display: none; }            /* o CTA e o rodapé cobrem a navegação */
+  .topo__cta { margin-left: auto; }
+  .colunas--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cartoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dupla { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 760px) {
+  .colunas--3,
+  .cartoes,
+  .cartoes--2,
+  .passos { grid-template-columns: 1fr; }
+
+  .recurso { grid-template-columns: 1fr; gap: var(--bv-space-2); }
+
+  /* Em tela estreita o leque alcança a coluna de texto: o véu precisa
+     avançar mais, senão as linhas cruzam o conteúdo. */
+  .hero::after {
+    background: linear-gradient(100deg,
+      var(--bv-graphite) 0%,
+      rgb(24 23 28 / 0.95) 50%,
+      rgb(24 23 28 / 0.60) 72%,
+      transparent 90%);
+  }
+  .rodape::after {
+    background: linear-gradient(80deg,
+      var(--bv-graphite) 0%,
+      rgb(24 23 28 / 0.95) 50%,
+      rgb(24 23 28 / 0.60) 72%,
+      transparent 90%);
+  }
+}
+
+@media (max-width: 460px) {
+  .topo__marca { font-size: 0.9rem; }
+  .topo__faixa { gap: var(--bv-space-4); }
+}

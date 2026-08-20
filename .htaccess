@@ -43,7 +43,7 @@ RedirectMatch 404 ^/node_modules(/|$)
 # A página não precisa dele: consome os tokens em CSS.
 RedirectMatch 404 ^/design-system/tokens/belliv-tokens\.json$
 
-<FilesMatch "^(server|build)\.js$">
+<FilesMatch "^(server|build)\.js$|^deploy\.sh$">
   Require all denied
 </FilesMatch>
 

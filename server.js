@@ -12,20 +12,22 @@
  * Variáveis de ambiente:
  *   PORT       porta HTTP (padrão 3000)
  *   HOST       interface (padrão 0.0.0.0)
- *   CONTACT_EMAIL   e-mail exibido na página. Se vazio, o bloco não aparece.
+ *
+ * Os canais de contato do site ficam em site.config.json, não no ambiente:
+ * são conteúdo público da página e precisam existir também no build estático.
  */
 
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { join, resolve, normalize, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { render, loadConfig } from './src/render.js';
 
 const ROOT = resolve(fileURLToPath(new URL('.', import.meta.url)));
 // PORT=0 é válido: pede ao sistema uma porta livre (usado nos testes).
 // `Number(x) || 3000` cairia no fallback, porque 0 é falsy.
 const PORT = parsePort(process.env.PORT, 3000);
 const HOST = process.env.HOST || '0.0.0.0';
-const CONTACT_EMAIL = (process.env.CONTACT_EMAIL || '').trim();
 const DEV = process.env.NODE_ENV !== 'production';
 
 /**
@@ -124,27 +126,13 @@ function send(res, status, body, headers = {}) {
   else res.end();
 }
 
-/** Injeta no HTML os valores que vêm do ambiente. */
-function renderPage(html) {
-  const contactBlock = CONTACT_EMAIL
-    ? `<a class="page__contact" href="mailto:${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(CONTACT_EMAIL)}</a>`
-    : '';
-  return html
-    .replace('<!--CONTACT-->', contactBlock)
-    .replace(/<!--YEAR-->/g, String(new Date().getFullYear()));
-}
-
-function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, (c) => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
-  ));
-}
 
 const viewCache = new Map();
 async function view(name) {
   if (!DEV && viewCache.has(name)) return viewCache.get(name);
   const raw = await readFile(join(ROOT, 'src', 'views', name), 'utf8');
-  const out = renderPage(raw);
+  const config = await loadConfig();
+  const out = render(raw, { contato: config.contato });
   viewCache.set(name, out);
   return out;
 }
@@ -222,9 +210,12 @@ server.listen(PORT, HOST, () => {
   // a porta real: com PORT=0 quem escolhe é o sistema
   const { port } = server.address();
   console.log(`[belliv] site em http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${port}`);
-  if (!CONTACT_EMAIL) {
-    console.log('[belliv] CONTACT_EMAIL não definido — o bloco de contato não será exibido.');
-  }
+  loadConfig().then((c) => {
+    const canais = Object.values(c.contato || {}).filter(Boolean).length;
+    if (canais === 0) {
+      console.log('[belliv] nenhum canal em site.config.json — a seção de contato sai vazia.');
+    }
+  });
 });
 
 for (const signal of ['SIGINT', 'SIGTERM']) {
