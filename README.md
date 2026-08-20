@@ -36,6 +36,7 @@ index.html                 GERADO por npm run build — não edite
 robots.txt
 server.js                  servidor HTTP, só biblioteca padrão do Node
 build.js                   gera os HTML estáticos a partir de src/views/
+deploy.sh                  pull no servidor, por SSH
 package.json               scripts e engines. Zero dependências.
 src/views/
 ├── index.html             FONTE da página de construção
@@ -215,11 +216,56 @@ git commit -am "..." && git push
 do `.htaccess`. Ligar antes do certificado existir gera loop e tira o site do
 ar.
 
+### Deploy por SSH
+
+A integração Git da Hostinger **não faz pull automático**: conectar o
+repositório só configura a origem. Com SSH ativo, o deploy é direto:
+
+```bash
+ssh SEU_USUARIO@SEU_HOST
+cd ~/public_html
+sh deploy.sh
+```
+
+`deploy.sh` faz fetch, mostra os commits que vai aplicar, usa `pull --ff-only`
+(falha em vez de sobrescrever alteração local que divergiu) e confere no final
+se o `index.html` servido é o site e se o `.htaccess` está presente.
+
+Para automatizar sem SSH, o hPanel oferece uma **Webhook URL** em
+Avançado › Git: cole em GitHub › Settings › Webhooks, content type
+`application/json`, evento "just the push event".
+
+### Repositório privado com deploy key
+
+Para o repositório voltar a ser privado sem quebrar o deploy, o servidor precisa
+de chave própria. Por SSH, no servidor:
+
+```bash
+ssh-keygen -t ed25519 -C "hostinger-belliv" -f ~/.ssh/belliv_deploy -N ""
+cat ~/.ssh/belliv_deploy.pub
+```
+
+Cole o conteúdo em GitHub › o repositório › Settings › **Deploy keys** › Add
+deploy key (sem marcar write access — o servidor só precisa ler).
+
+Depois aponte o remote para SSH e diga ao git qual chave usar:
+
+```bash
+cd ~/public_html
+git remote set-url origin git@github.com:livfborg/site-belliv-strategy.git
+git config core.sshCommand "ssh -i ~/.ssh/belliv_deploy -o IdentitiesOnly=yes"
+ssh -T -i ~/.ssh/belliv_deploy git@github.com   # deve reconhecer o repositório
+sh deploy.sh
+```
+
+Com isso funcionando, o repositório pode ir para privado sem afetar o site.
+
 ### VPS
 
-Aí sim o Node roda. `npm start`, health check em `/health`, porta em `PORT`.
-Use um gerenciador de processo (systemd, pm2) e um proxy reverso na frente.
-Nesse modo o `.htaccess` é ignorado e quem aplica as regras é o `server.js`.
+Se for VPS, o Node roda: `npm start`, health check em `/health`, porta em
+`PORT`. Use um gerenciador de processo (systemd, pm2) e um proxy reverso na
+frente. Nesse modo o `.htaccess` é ignorado e quem aplica as regras é o
+`server.js`.
 
 ### O que o `.htaccess` protege
 
