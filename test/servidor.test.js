@@ -10,7 +10,6 @@ let base;
 
 before(async () => {
   process.env.PORT = '0';                 // porta livre, escolhida pelo SO
-  process.env.CONTACT_EMAIL = 'teste@exemplo.com';
   ({ server } = await import('../server.js'));
   await new Promise((res) => {
     if (server.listening) return res();
@@ -27,10 +26,72 @@ test('a página inicial responde 200 e é HTML', async () => {
   assert.match(r.headers.get('content-type'), /text\/html/);
 });
 
-test('a página diz que o site está em construção', async () => {
+test('a home é o site institucional', async () => {
   const html = await (await fetch(`${base}/`)).text();
-  assert.match(html, /Site em construção/i);
-  assert.match(html, /Estamos construindo o próximo passo/);
+  assert.match(html, /Estratégia para transformar o que já existe/);
+  assert.match(html, /We Belliv/);
+});
+
+test('as seções do site estão presentes e ancoradas', async () => {
+  const html = await (await fetch(`${base}/`)).text();
+  for (const id of ['essencia', 'servicos', 'territorio', 'metodo', 'ferramenta', 'escopo', 'contato']) {
+    assert.match(html, new RegExp(`id="${id}"`), `falta a seção #${id}`);
+  }
+});
+
+test('os serviços do catálogo aparecem', async () => {
+  const html = await (await fetch(`${base}/`)).text();
+  for (const s of ['Social Media', 'SEO', 'Newsletter', 'Google Ads', 'Meta Ads',
+                   'LinkedIn Ads', 'Landing pages', 'ZapFlow', 'Análise de Dados']) {
+    assert.ok(html.includes(s), `falta o serviço "${s}"`);
+  }
+});
+
+/**
+ * O material de origem era uma proposta para um cliente específico. Nada disso
+ * pode vazar para o site público: nem o nome, nem as áreas de atuação, nem os
+ * produtos do onboarding, nem os valores.
+ */
+test('nada do cliente da proposta aparece no site', async () => {
+  const html = (await (await fetch(`${base}/`)).text()).toLowerCase();
+  const proibidos = [
+    'miguelles', 'nikolas', 'advocacia', 'advogad', 'escritório', 'escritorio',
+    'previdenc', 'auxílio', 'auxilio', 'doença', 'moradia', 'residente',
+    'fies', 'contrato nulo', 'servidores tempor', 'médic', 'oab',
+    'r$', '4.600', '3.800', '3.500', '2.800'
+  ];
+  for (const termo of proibidos) {
+    assert.ok(!html.includes(termo), `o site não deveria mencionar "${termo}"`);
+  }
+});
+
+test('a barra de navegação abre com o tema do hero, sem piscar', async () => {
+  const html = await (await fetch(`${base}/`)).text();
+  assert.match(html, /<header class="topo" id="topo" data-bv-theme="dark">/);
+});
+
+test('cada seção declara o próprio tema da marca', async () => {
+  const html = await (await fetch(`${base}/`)).text();
+  const temas = [...html.matchAll(/data-bv-theme="(\w+)"/g)].map((m) => m[1]);
+  assert.ok(temas.includes('dark'), 'falta seção Graphite');
+  assert.ok(temas.includes('light'), 'falta seção Ivory');
+  assert.ok(temas.includes('violet'), 'falta seção Deep Violet');
+});
+
+/**
+ * Regra do manual (§05): Deep Violet nunca no mesmo bloco que Graphite.
+ * Na prática: nunca duas seções adjacentes violet e dark.
+ */
+test('Deep Violet nunca fica adjacente a Graphite', async () => {
+  const html = await (await fetch(`${base}/`)).text();
+  const secoes = [...html.matchAll(/<(?:section|footer)[^>]*data-bv-theme="(\w+)"/g)]
+    .map((m) => m[1]);
+
+  for (let i = 1; i < secoes.length; i++) {
+    const par = [secoes[i - 1], secoes[i]].sort().join('+');
+    assert.notEqual(par, 'dark+violet',
+      `seções ${i - 1} e ${i} são ${secoes[i - 1]} e ${secoes[i]} — precisa de Ivory entre elas`);
+  }
 });
 
 test('a página carrega o design system, não CSS solto', async () => {
@@ -44,10 +105,6 @@ test('o tema institucional escuro está aplicado', async () => {
   assert.match(html, /data-bv-theme="dark"/);
 });
 
-test('CONTACT_EMAIL é injetado quando definido', async () => {
-  const html = await (await fetch(`${base}/`)).text();
-  assert.match(html, /teste@exemplo\.com/);
-});
 
 test('os tokens do design system são servidos', async () => {
   const r = await fetch(`${base}/design-system/tokens/belliv-tokens.css`);
@@ -95,8 +152,9 @@ test('path traversal é bloqueado', async () => {
 
 test('os estáticos da página são servidos em /public', async () => {
   for (const [p, tipo] of [
+    ['/public/css/site.css', /text\/css/],
+    ['/public/js/site.js', /javascript/],
     ['/public/css/pagina.css', /text\/css/],
-    ['/public/js/pagina.js', /javascript/],
     ['/public/favicon.svg', /image\/svg/]
   ]) {
     const r = await fetch(`${base}${p}`);
@@ -115,6 +173,13 @@ test('/robots.txt é servido e protege os caminhos internos', async () => {
 test('o JSON de tokens é bloqueado: carrega território verbal', async () => {
   const r = await fetch(`${base}/design-system/tokens/belliv-tokens.json`);
   assert.equal(r.status, 404);
+});
+
+test('sem canais configurados, nenhum link de contato é renderizado', async () => {
+  const html = await (await fetch(`${base}/`)).text();
+  assert.ok(!html.includes('class="canais"'), 'não deveria haver lista de canais');
+  assert.ok(!html.includes('mailto:'), 'não deveria haver mailto vazio');
+  assert.ok(!html.includes('wa.me'), 'não deveria haver link de WhatsApp vazio');
 });
 
 test('POST é rejeitado com 405', async () => {

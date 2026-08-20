@@ -191,6 +191,45 @@
 }
 
 /* ====================================================================
+   SEMÂNTICOS — TEMA CLARO explícito
+   O :root acima já é o claro, mas sem este seletor não há como voltar ao
+   claro dentro de um escopo escuro — necessário em página que alterna
+   seções Graphite, Ivory e Deep Violet.
+   ==================================================================== */
+[data-bv-theme="light"],
+.bv-light {
+  --bv-surface:          var(--bv-ivory);
+  --bv-surface-raised:   var(--bv-neutral-0);
+  --bv-surface-sunken:   var(--bv-neutral-100);
+  --bv-surface-brand:    var(--bv-soft-lilac);
+  --bv-surface-inverse:  var(--bv-graphite);
+
+  --bv-text:             var(--bv-graphite);
+  --bv-text-muted:       var(--bv-neutral-600);
+  --bv-text-subtle:      var(--bv-neutral-500);
+  --bv-text-brand:       var(--bv-lilac-ink);
+  --bv-text-on-inverse:  var(--bv-ivory);
+  --bv-text-display:     var(--bv-lilac);   /* decorativo: 2.57:1 */
+
+  --bv-border:           var(--bv-neutral-200);
+  --bv-border-strong:    var(--bv-neutral-300);
+  --bv-border-brand:     var(--bv-lilac);
+
+  --bv-action:           var(--bv-lilac-ink);
+  --bv-action-hover:     var(--bv-violet-800);
+  --bv-action-active:    var(--bv-violet-900);
+  --bv-action-text:      var(--bv-ivory);
+  --bv-focus-ring:       var(--bv-lilac-ink);
+
+  --bv-success:          #1F6F5C;
+  --bv-warning:          #8A5A12;
+  --bv-danger:           #A8283A;
+  --bv-info:             var(--bv-lilac-ink);
+
+  --bv-graphic-stroke:   var(--bv-lilac);
+}
+
+/* ====================================================================
    SEMÂNTICOS — TEMA ESCURO (Graphite) · institucional, o padrão da marca
    Aplique via [data-bv-theme="dark"] ou .bv-dark em qualquer bloco.
    ==================================================================== */

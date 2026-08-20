@@ -4,17 +4,17 @@
   Gere de novo com: npm run build
 -->
 <!doctype html>
-<html lang="pt-BR" data-bv-theme="dark">
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BELLIV Strategy</title>
-<meta name="description" content="A BELLIV Strategy está construindo seu site. Estratégia para transformar o que já existe.">
+<title>BELLIV Strategy · Marketing Estratégico</title>
+<meta name="description" content="A BELLIV atua ao lado de empresas tradicionais para identificar oportunidades e desenvolver as estruturas necessárias para o próximo estágio do negócio.">
 <meta name="theme-color" content="#18171C">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="BELLIV Strategy">
-<meta property="og:description" content="Estamos construindo o próximo passo. Em breve, aqui.">
+<meta property="og:title" content="BELLIV Strategy · Marketing Estratégico">
+<meta property="og:description" content="Estratégia para transformar o que já existe.">
 <meta property="og:locale" content="pt_BR">
 
 <link rel="icon" href="/public/favicon.svg" type="image/svg+xml">
@@ -25,46 +25,499 @@
 <!-- design system da marca: tokens primeiro, componentes depois -->
 <link rel="stylesheet" href="/design-system/tokens/belliv-tokens.css">
 <link rel="stylesheet" href="/design-system/css/belliv-components.css">
-<link rel="stylesheet" href="/public/css/pagina.css">
+<link rel="stylesheet" href="/public/css/site.css">
 </head>
 
-<body class="bv page page--feixe">
+<body class="bv site">
 
-  <canvas class="page__feixe" id="feixe" aria-hidden="true"></canvas>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
 
-  <main class="page__inner">
+<!-- ====================================================== NAVEGAÇÃO ==== -->
+<!-- O tema inicial vem no HTML: a página abre no hero escuro. Sem isto a
+     barra pinta claro no primeiro frame e só corrige quando o JS roda. -->
+<header class="topo" id="topo" data-bv-theme="dark">
+  <div class="topo__faixa">
+    <a class="topo__marca" href="#topo" aria-label="BELLIV Strategy, início">
+      <span class="bv-wordmark">
+        <span class="bv-wordmark__name">Belliv</span>
+        <span class="bv-wordmark__descriptor">Strategy</span>
+      </span>
+    </a>
 
-    <span class="bv-wordmark page__mark">
+    <nav class="topo__nav" aria-label="Seções do site">
+      <a class="topo__link" href="#essencia">Essência</a>
+      <a class="topo__link" href="#servicos">Serviços</a>
+      <a class="topo__link" href="#metodo">Método</a>
+      <a class="topo__link" href="#ferramenta">Ferramenta</a>
+      <a class="topo__link" href="#escopo">Escopo</a>
+    </nav>
+
+    <a class="bv-btn bv-btn--primary bv-btn--sm topo__cta" href="#contato">Falar com a Belliv</a>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <!-- ========================================================= HERO ==== -->
+  <section class="hero secao--graphite" data-bv-theme="dark" aria-labelledby="hero-titulo">
+    <canvas class="hero__feixe" id="feixe-hero" aria-hidden="true"></canvas>
+
+    <div class="hero__inner">
+      <p class="bv-eyebrow hero__olho">Marketing estratégico</p>
+
+      <h1 class="bv-display hero__titulo" id="hero-titulo">
+        Estratégia para transformar o que já existe.
+      </h1>
+
+      <p class="bv-display-translation hero__traducao">Strategy to transform what already exists.</p>
+
+      <p class="hero__lede">
+        A BELLIV atua ao lado de empresas tradicionais para identificar
+        oportunidades e desenvolver as estruturas necessárias para o próximo
+        estágio do negócio.
+      </p>
+
+      <div class="hero__acoes">
+        <a class="bv-btn bv-btn--primary bv-btn--lg" href="#contato">Falar com a Belliv</a>
+        <a class="bv-btn bv-btn--secondary bv-btn--lg" href="#servicos">Ver serviços</a>
+      </div>
+
+      <p class="bv-signature hero__assinatura">
+        We Belliv<br><em>in Strategy.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================================================== ESSÊNCIA ==== -->
+  <section class="secao secao--graphite" data-bv-theme="dark" id="essencia" aria-labelledby="essencia-titulo">
+    <div class="conteiner">
+      <p class="bv-eyebrow"><span class="olho__num">01</span> Essência</p>
+
+      <h2 class="bv-display bv-display--sm titulo-secao" id="essencia-titulo">
+        A estratégia como força capaz de transformar negócios tradicionais.
+      </h2>
+
+      <div class="colunas colunas--3">
+        <div class="coluna">
+          <h3 class="coluna__titulo">Ideia central</h3>
+          <p>
+            A BELLIV acredita na estratégia como força capaz de transformar
+            negócios tradicionais. A marca existe para identificar
+            oportunidades, construir novas possibilidades e colocar mudanças
+            em movimento.
+          </p>
+        </div>
+
+        <div class="coluna">
+          <h3 class="coluna__titulo">Propósito</h3>
+          <p>
+            Ser solução para a tradição que parou no tempo por meio de
+            estratégias que acendam setores inexistentes, repaginam processos
+            antigos e catalisam a operação.
+          </p>
+        </div>
+
+        <div class="coluna">
+          <h3 class="coluna__titulo">Para quem</h3>
+          <p>
+            Empresas tradicionais que possuem história, conhecimento e
+            estrutura, e buscam novas possibilidades de crescimento,
+            posicionamento e operação.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== SERVIÇOS ==== -->
+  <section class="secao secao--ivory" data-bv-theme="light" id="servicos" aria-labelledby="servicos-titulo">
+    <div class="conteiner">
+      <p class="bv-eyebrow"><span class="olho__num">02</span> Serviços</p>
+
+      <h2 class="bv-display bv-display--sm titulo-secao" id="servicos-titulo">
+        Conteúdo que constrói autoridade.<br>Mídia que gera contato.
+      </h2>
+
+      <p class="lede">
+        Duas frentes que operam juntas: uma constrói presença e repertório, a
+        outra transforma demanda em contato qualificado.
+      </p>
+
+      <!-- ---------------------------------- marketing de conteúdo ------ -->
+      <h3 class="grupo__titulo">Marketing de Conteúdo</h3>
+
+      <div class="cartoes">
+        <article class="cartao">
+          <h4 class="cartao__titulo">Social Media</h4>
+          <p class="cartao__texto">Calendário, redação e publicação nos perfis da marca.</p>
+        </article>
+
+        <article class="cartao cartao--marca">
+          <h4 class="cartao__titulo">Design</h4>
+          <p class="cartao__texto">Peças e site diagramados no padrão visual do manual da marca.</p>
+        </article>
+
+        <article class="cartao">
+          <h4 class="cartao__titulo">SEO</h4>
+          <p class="cartao__texto">Estrutura, termos de busca e otimização das páginas.</p>
+        </article>
+
+        <article class="cartao cartao--marca">
+          <h4 class="cartao__titulo">Artigos</h4>
+          <p class="cartao__texto">Textos técnicos e informativos para otimização das páginas.</p>
+        </article>
+
+        <article class="cartao">
+          <h4 class="cartao__titulo">Newsletter</h4>
+          <p class="cartao__texto">Comunicação periódica para a base de contatos.</p>
+        </article>
+
+        <article class="cartao cartao--marca">
+          <h4 class="cartao__titulo">Vídeos</h4>
+          <p class="cartao__texto">Roteiro e edição de peças para redes.</p>
+        </article>
+      </div>
+
+      <!-- ------------------------------------ mídia de performance ----- -->
+      <h3 class="grupo__titulo">Mídia de Performance</h3>
+
+      <div class="cartoes">
+        <article class="cartao">
+          <h4 class="cartao__titulo">Google Ads</h4>
+          <p class="cartao__texto">Campanhas de busca sobre os termos prioritários.</p>
+        </article>
+
+        <article class="cartao cartao--marca">
+          <h4 class="cartao__titulo">Meta Ads</h4>
+          <p class="cartao__texto">Anúncios em Instagram e Facebook por segmento.</p>
+        </article>
+
+        <article class="cartao">
+          <h4 class="cartao__titulo">LinkedIn Ads</h4>
+          <p class="cartao__texto">Alcance qualificado em público corporativo.</p>
+        </article>
+
+        <article class="cartao cartao--marca">
+          <h4 class="cartao__titulo">Landing pages</h4>
+          <p class="cartao__texto">Páginas de destino com qualificação de contato.</p>
+        </article>
+
+        <article class="cartao">
+          <h4 class="cartao__titulo">ZapFlow · CRM</h4>
+          <p class="cartao__texto">Plataforma de gestão de leads com automações de IA.</p>
+        </article>
+
+        <article class="cartao cartao--marca">
+          <h4 class="cartao__titulo">Análise de Dados</h4>
+          <p class="cartao__texto">Leitura mensal de custo por contato e origem.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================== TERRITÓRIO ESTRATÉGICO ==== -->
+  <section class="secao secao--violet" data-bv-theme="violet" id="territorio" aria-labelledby="territorio-titulo">
+    <div class="conteiner">
+      <div class="dupla">
+        <div class="dupla__editorial">
+          <p class="bv-eyebrow"><span class="olho__num">03</span> Território estratégico</p>
+
+          <h2 class="bv-display bv-display--sm titulo-secao" id="territorio-titulo">
+            Onde a estratégia entra em movimento.
+          </h2>
+
+          <p class="lede">
+            Estratégia ganha valor quando entra em movimento. Estas são as
+            frentes em que a BELLIV atua.
+          </p>
+        </div>
+
+        <ul class="bv-rule-list dupla__lista">
+          <li>Transformação de negócios tradicionais.</li>
+          <li>Estratégia aplicada à realidade da operação.</li>
+          <li>Criação de novas possibilidades de negócio.</li>
+          <li>Evolução de marcas, produtos e processos.</li>
+          <li>Implementação de estruturas que sustentam crescimento.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= MÉTODO ==== -->
+  <section class="secao secao--ivory" data-bv-theme="light" id="metodo" aria-labelledby="metodo-titulo">
+    <div class="conteiner">
+      <p class="bv-eyebrow"><span class="olho__num">04</span> Método</p>
+
+      <h2 class="bv-display bv-display--sm titulo-secao" id="metodo-titulo">
+        Todo projeto começa por um diagnóstico.
+      </h2>
+
+      <p class="lede">
+        Antes de produzir qualquer peça ou subir qualquer campanha, o trabalho
+        é entender o que já funciona e o que está parado. É esse diagnóstico
+        que define a ordem das entregas.
+      </p>
+
+      <ol class="passos">
+        <li class="passo">
+          <h3 class="passo__titulo">Forças que já existem</h3>
+          <p class="passo__texto">
+            Todo negócio com história tem resultado orgânico que ninguém está
+            usando. O primeiro movimento é mapear essas forças e colocá-las na
+            construção do branding.
+          </p>
+        </li>
+
+        <li class="passo">
+          <h3 class="passo__titulo">Organização</h3>
+          <p class="passo__texto">
+            Estruturar o posicionamento nas redes e desenvolver manual da marca
+            e site em paralelo à criação das estratégias de tráfego pago. Base
+            e aquisição caminham juntas.
+          </p>
+        </li>
+
+        <li class="passo">
+          <h3 class="passo__titulo">Foco nas personas</h3>
+          <p class="passo__texto">
+            A força das campanhas está nas personas por trás de cada serviço.
+            É a partir dessa análise que a oferta é distribuída e a mídia é
+            segmentada.
+          </p>
+        </li>
+
+        <li class="passo">
+          <h3 class="passo__titulo">Posicionamento e branding</h3>
+          <p class="passo__texto">
+            Criar e posicionar as áreas além da atividade principal. Além de
+            aproveitar as forças que já existem, o objetivo é gerar
+            autoridade.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ==================================================== FERRAMENTA ==== -->
+  <section class="secao secao--graphite" data-bv-theme="dark" id="ferramenta" aria-labelledby="ferramenta-titulo">
+    <div class="conteiner">
+      <p class="bv-eyebrow"><span class="olho__num">05</span> Ferramenta</p>
+
+      <h2 class="bv-display bv-display--sm titulo-secao" id="ferramenta-titulo">
+        ZapFlow CRM.<br>WhatsApp integrado com IA.
+      </h2>
+
+      <p class="lede">
+        O cliente recebe acesso próprio ao CRM, onde todo contato gerado pelas
+        campanhas e pelo site é registrado. Nada de captação fica fora do
+        sistema, e o histórico permanece com o cliente ao fim do contrato.
+      </p>
+
+      <div class="cartoes cartoes--2">
+        <article class="cartao cartao--vetor">
+          <h3 class="cartao__titulo">Contatos em um só lugar</h3>
+          <p class="cartao__texto">
+            WhatsApp, Instagram e campanhas de mídia entram na mesma fila, com
+            a origem identificada desde o primeiro contato.
+          </p>
+        </article>
+
+        <article class="cartao cartao--vetor">
+          <h3 class="cartao__titulo">Etapas do atendimento</h3>
+          <p class="cartao__texto">
+            Cada contato avança por etapas do funil definidas de acordo com o
+            serviço específico.
+          </p>
+        </article>
+
+        <article class="cartao cartao--vetor">
+          <h3 class="cartao__titulo">Registro de conversa</h3>
+          <p class="cartao__texto">
+            Anotações, arquivos e histórico ficam anexados ao contato, visíveis
+            para toda a equipe.
+          </p>
+        </article>
+
+        <article class="cartao cartao--vetor">
+          <h3 class="cartao__titulo">Lembretes de retorno</h3>
+          <p class="cartao__texto">
+            Automação de follow-ups com IA para acompanhamento de leads e
+            oportunidades comerciais.
+          </p>
+        </article>
+      </div>
+
+      <h3 class="grupo__titulo">Recursos</h3>
+
+      <dl class="recursos">
+        <div class="recurso">
+          <dt class="recurso__nome">Agente de IA personalizado · SDR</dt>
+          <dd class="recurso__desc">
+            Prospecção, abordagem, qualificação e follow-up automatizados, com
+            IA conduzindo o atendimento comercial e avançando as oportunidades
+            ao longo do processo de vendas.
+          </dd>
+        </div>
+
+        <div class="recurso">
+          <dt class="recurso__nome">Análises mensais</dt>
+          <dd class="recurso__desc">
+            Contatos por origem, taxa de qualificação e custo por contato.
+          </dd>
+        </div>
+
+        <div class="recurso">
+          <dt class="recurso__nome">Kanban comercial</dt>
+          <dd class="recurso__desc">
+            Gestão visual de leads e oportunidades, com movimentação entre
+            etapas, acompanhamento do status e organização do processo de
+            vendas.
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ======================================================= ESCOPO ==== -->
+  <section class="secao secao--ivory" data-bv-theme="light" id="escopo" aria-labelledby="escopo-titulo">
+    <div class="conteiner">
+      <p class="bv-eyebrow"><span class="olho__num">06</span> Escopo e entregas</p>
+
+      <h2 class="bv-display bv-display--sm titulo-secao" id="escopo-titulo">
+        O que entra no ciclo de trabalho.
+      </h2>
+
+      <h3 class="grupo__titulo">Entregas recorrentes</h3>
+
+      <div class="cartoes">
+        <article class="cartao">
+          <h4 class="cartao__titulo">Social Media</h4>
+          <p class="cartao__texto">
+            Planejamento de conteúdo, gestão dos perfis, organização do feed e
+            monitoramento de métricas.
+          </p>
+        </article>
+
+        <article class="cartao cartao--marca">
+          <h4 class="cartao__titulo">Produções gráficas</h4>
+          <p class="cartao__texto">
+            Criação e produção das postagens institucionais e informativas —
+            arte e pauta.
+          </p>
+        </article>
+
+        <article class="cartao">
+          <h4 class="cartao__titulo">Edição de vídeos</h4>
+          <p class="cartao__texto">Edição das peças em vídeo para as redes.</p>
+        </article>
+
+        <article class="cartao cartao--marca">
+          <h4 class="cartao__titulo">Manutenção do site e SEO</h4>
+          <p class="cartao__texto">
+            Publicação, ajustes de página, monitoramento, correções e criação
+            de landing pages.
+          </p>
+        </article>
+
+        <article class="cartao">
+          <h4 class="cartao__titulo">Mídia de performance</h4>
+          <p class="cartao__texto">
+            Estratégias de tráfego pago e monitoramento de performance com
+            análise de dados.
+          </p>
+        </article>
+
+        <article class="cartao cartao--marca">
+          <h4 class="cartao__titulo">Acesso ao ZapFlow CRM</h4>
+          <p class="cartao__texto">
+            Gestão de leads, contatos, oportunidades e processos comerciais com
+            automações de IA.
+          </p>
+        </article>
+      </div>
+
+      <h3 class="grupo__titulo">Entregas únicas</h3>
+
+      <div class="cartoes cartoes--2">
+        <article class="cartao cartao--vetor">
+          <h4 class="cartao__titulo">Manual da marca</h4>
+          <p class="cartao__texto">
+            Criação completa da identidade visual, aplicações e regras de uso.
+          </p>
+        </article>
+
+        <article class="cartao cartao--vetor">
+          <h4 class="cartao__titulo">Site institucional</h4>
+          <p class="cartao__texto">
+            Arquitetura, redação, design, implementação e publicação.
+          </p>
+        </article>
+      </div>
+
+      <p class="nota">
+        O ciclo de trabalho pode ser mensal ou anual. O método é o mesmo nas
+        duas opções — muda a duração do ciclo. A manutenção do site está
+        incluída no plano.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================================================== MANIFESTO ==== -->
+  <section class="secao secao--violet manifesto" data-bv-theme="violet" aria-label="Frases da marca">
+    <div class="conteiner">
+      <p class="manifesto__frase bv-u-serif">
+        O próximo negócio pode estar dentro do negócio que
+        <em>já existe.</em>
+      </p>
+      <p class="manifesto__apoio">
+        Novas possibilidades nascem de novas perspectivas.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== CONTATO ==== -->
+  <section class="secao secao--ivory" data-bv-theme="light" id="contato" aria-labelledby="contato-titulo">
+    <div class="conteiner">
+      <div class="dupla">
+        <div class="dupla__editorial">
+          <p class="bv-eyebrow"><span class="olho__num">07</span> Contato</p>
+
+          <h2 class="bv-display bv-display--sm titulo-secao" id="contato-titulo">
+            Vamos construir o próximo passo.
+          </h2>
+
+          <p class="lede">
+            Conte em que estágio o negócio está e o que precisa destravar. O
+            primeiro movimento é sempre o diagnóstico.
+          </p>
+        </div>
+
+        <div class="dupla__lista">
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================================================== RODAPÉ ==== -->
+<footer class="rodape secao--graphite" data-bv-theme="dark">
+  <canvas class="rodape__feixe" id="feixe-rodape" aria-hidden="true"></canvas>
+
+  <div class="rodape__inner">
+    <span class="bv-wordmark rodape__marca">
       <span class="bv-wordmark__name">Belliv</span>
       <span class="bv-wordmark__descriptor">Strategy</span>
     </span>
 
-    <p class="bv-eyebrow page__status">
-      <span class="page__dot" aria-hidden="true"></span>
-      Site em construção
-    </p>
+    <p class="rodape__frase bv-u-serif">Strategy creates what comes next.</p>
 
-    <h1 class="bv-display page__title">Estamos construindo o próximo passo.</h1>
+    <p class="rodape__meta">BELLIV Strategy · 2026</p>
+  </div>
+</footer>
 
-    <p class="bv-body bv-body--lead page__lede">
-      O site da BELLIV Strategy está em desenvolvimento.
-      Em breve, aqui.
-    </p>
-
-    <p class="bv-signature page__signature">
-      We Belliv<br><em>in Strategy.</em>
-    </p>
-
-    
-
-  </main>
-
-  <footer class="page__foot">
-    <p class="page__phrase bv-u-serif">Strategy creates what comes next.</p>
-    <p class="page__meta">BELLIV Strategy · 2026</p>
-  </footer>
-
-  <script src="/design-system/js/belliv-feixe.js"></script>
-  <script src="/public/js/pagina.js"></script>
+<script src="/design-system/js/belliv-feixe.js"></script>
+<script src="/public/js/site.js"></script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 # BELLIV Strategy · Site
 
-Aplicação Node.js do site da BELLIV Strategy. No ar hoje: uma página de
-construção. O design system da marca já está no repositório e é o que a página
-consome.
+Aplicação Node.js do site institucional da BELLIV Strategy. O design system da
+marca está no repositório e é o que o site consome — nenhum valor de cor ou de
+tipo é repetido fora dele.
 
 ## Rodar
 
@@ -41,9 +41,13 @@ src/views/
 ├── index.html             FONTE da página de construção
 └── 404.html               FONTE do erro 404
 public/
-├── css/pagina.css         estilo da página (só tokens, nenhum valor cru)
-├── js/pagina.js           monta o feixe no fundo
+├── css/site.css           estilo do site (só tokens, nenhum valor cru)
+├── css/pagina.css         estilo da página 404
+├── js/site.js             feixe, cor da barra e seção atual
+├── js/pagina.js           feixe da página 404
 └── favicon.svg            símbolo V da marca
+site.config.json           canais de contato exibidos no site
+src/render.js              render compartilhado por server.js e build.js
 design-system/             o design system (ver seção abaixo)
 docs/index.html            documentação visual — NÃO servida na web
 test/servidor.test.js      17 testes
@@ -64,6 +68,57 @@ Os HTML da raiz são **gerados**. Edite `src/views/` e rode `npm run build`.
 `docs/` **não é servido de propósito**: é documentação interna da marca
 (posicionamento, território verbal). O repositório é privado, mas um site
 publicado não é.
+
+## O site
+
+Página única com sete seções ancoradas, alternando as três superfícies da marca.
+
+| # | Seção | Superfície | Conteúdo |
+|---|---|---|---|
+| 01 | Essência | Graphite | Ideia central, propósito e público |
+| 02 | Serviços | Ivory | Marketing de Conteúdo e Mídia de Performance |
+| 03 | Território estratégico | Deep Violet | As cinco frentes de atuação |
+| 04 | Método | Ivory | O diagnóstico em quatro passos |
+| 05 | Ferramenta | Graphite | ZapFlow CRM e recursos |
+| 06 | Escopo e entregas | Ivory | Recorrentes e únicas |
+| — | Manifesto | Deep Violet | Frases da marca |
+| 07 | Contato | Ivory | Canais |
+
+A ordem é o percurso do serviço, do diagnóstico à entrega — é isso que a
+numeração comunica.
+
+**Deep Violet nunca fica adjacente a Graphite**, regra do manual (§05). Há
+sempre uma seção Ivory entre as duas, e a barra de navegação assume a cor da
+seção que está atrás dela em vez de manter uma cor fixa. Um teste verifica a
+adjacência a cada build.
+
+### Editar o conteúdo
+
+O texto vive em `src/views/index.html`. Depois de editar:
+
+```bash
+npm run build      # regenera index.html na raiz
+```
+
+### Canais de contato
+
+Ficam em **`site.config.json`**, não em variável de ambiente — são conteúdo
+público da página e precisam existir também no build estático.
+
+```json
+{
+  "contato": {
+    "email": "contato@exemplo.com",
+    "whatsapp": "+5511999999999",
+    "whatsappLabel": "(11) 99999-9999",
+    "instagram": "https://instagram.com/...",
+    "linkedin": "https://linkedin.com/company/..."
+  }
+}
+```
+
+Canal vazio simplesmente não aparece. **Hoje estão todos vazios**, então a
+seção de contato sai sem nenhum canal — preencha antes de publicar.
 
 ## Design system
 
@@ -194,6 +249,8 @@ Registrados na seção 10 da documentação visual e no
 - **Wordmark** ainda não vetorizado — depende de instalar a Manrope.
 - **Sistema de ícones** e **paleta categórica para gráficos** não existem no
   manual e ainda precisam ser definidos.
+- **Canais de contato** em `site.config.json` estão vazios: a seção de contato
+  do site fica sem nenhum canal até serem preenchidos.
 
 ---
 
