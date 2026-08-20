@@ -8,14 +8,17 @@
    assume a cor da seção que está atrás dela.
    ========================================================================== */
 
-/* O fundo do body só aparece na área da barra de rolagem e no overscroll.
-   A página abre no hero e termina no rodapé, os dois Graphite — então é essa
-   a cor certa aqui, e não o Ivory que o :root traz por padrão.
-   color-scheme faz a barra de rolagem acompanhar. */
+/* color-scheme vale a partir do elemento raiz: no body a barra de rolagem
+   continua clara. Esta folha só é carregada pelo site, então declarar aqui não
+   afeta a página 404. */
+:root { color-scheme: dark; }
+
+/* O fundo do body aparece na área da barra de rolagem e no overscroll. A
+   página abre no hero e termina no rodapé, os dois Graphite — então é essa a
+   cor certa, e não o Ivory que o :root traz por padrão. */
 .site {
   overflow-x: hidden;
   background-color: var(--bv-graphite);
-  color-scheme: dark;
 }
 
 /* Link de salto: invisível até receber foco pelo teclado. */
@@ -213,17 +216,9 @@
 .hero__titulo {
   max-width: 24ch;
   font-size: clamp(2.4rem, 7vw, var(--bv-text-6xl));
-  margin-bottom: var(--bv-space-4);
-}
-
-.hero__traducao { margin-bottom: var(--bv-space-6); }
-
-.hero__lede {
-  max-width: 46ch;
-  font-size: var(--bv-text-lg);
-  line-height: var(--bv-leading-relaxed);
-  color: var(--bv-text-muted);
-  margin: 0 0 var(--bv-space-8);
+  /* o título vai direto nos botões: assume o respiro que a tradução e o
+     parágrafo de apoio davam antes */
+  margin-bottom: clamp(var(--bv-space-7), 5vh, var(--bv-space-9));
 }
 
 .hero__acoes {
