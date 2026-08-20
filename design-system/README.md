@@ -17,6 +17,8 @@ belliv-design-system/
 │   └── tailwind.config.js     # mesmos valores como config Tailwind
 ├── css/
 │   └── belliv-components.css  # camada de componentes (botões, forms, cards, nav…)
+├── js/
+│   └── belliv-feixe.js        # o feixe da marca em canvas, geometria travada
 ├── assets/
 │   ├── belliv-simbolo-v.svg                 # símbolo V · Belliv Lilac
 │   ├── belliv-simbolo-v-ink.svg             # símbolo V · Lilac Ink
@@ -291,10 +293,45 @@ Por isso há duas famílias de asset:
 | `belliv-feixe-referencia*.svg` | Quadrado, as 13 pontas visíveis. É a **construção** — use para conferir e redesenhar. |
 | `belliv-feixe-graphite.svg` e variantes | 16:9, feixe ampliado e cortado pela moldura. É a **aplicação** — capa, abertura, seção. |
 
+Duas formas de aplicar. Em CSS, para um bloco estático:
+
 ```html
 <section class="bv-dark bv-fan bv-section">…</section>
 <section class="bv-dark bv-fan bv-fan--right bv-section">…</section>
 ```
+
+Em canvas, quando o feixe precisa acompanhar redimensionamento e ficar nítido
+em tela retina — é o caminho recomendado para hero e abertura:
+
+```html
+<canvas id="feixe"></canvas>
+<script src="js/belliv-feixe.js"></script>
+<script>
+  BellivFeixe.mount(document.getElementById('feixe'), {
+    origin: 'bottom-right',   // 'bottom-left' | 'bottom-right'
+    fit: 'cover'              // 'cover' corta as pontas · 'contain' mostra as 13
+  });
+</script>
+```
+
+| Opção | Padrão | O que faz |
+|---|---|---|
+| `origin` | `'bottom-left'` | Canto de origem. Só os dois cantos inferiores. |
+| `fit` | `'cover'` | `'cover'` amplia e a moldura corta · `'contain'` mostra as 13 pontas. |
+| `color` | lilás | Cor do traço em `'r,g,b'`. Troque só por Deep Violet ou lilás. |
+| `inset` | `0.05` | Recuo da origem, fração do lado. Só em `'contain'`. |
+
+`BellivFeixe.mount()` devolve uma função para desmontar. As constantes da
+construção ficam expostas em `BellivFeixe.RAYS`, `.FIRST_ANGLE`, `.STEP`,
+`.LAST_ANGLE` — se você precisar reproduzir a geometria em outra ferramenta,
+leia dali em vez de recopiar números.
+
+> **O véu de legibilidade.** O manual proíbe o feixe sobre conteúdo com muita
+> informação. Quando o texto tiver de conviver com o grafismo, ponha entre os
+> dois um gradiente da própria cor da superfície, dissolvendo na direção em que
+> o leque abre. É o que a página de construção faz — veja
+> `src/public/css/pagina.css`. Em viewport estreita o leque alcança a coluna de
+> texto e o véu precisa avançar mais.
 
 `belliv-feixe-graphite-direita.svg` é o **mesmo** grafismo espelhado para o canto
 inferior direito — posicionamento, não versão nova.

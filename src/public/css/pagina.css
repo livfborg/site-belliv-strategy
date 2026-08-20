@@ -1,0 +1,156 @@
+/* ==========================================================================
+   BELLIV STRATEGY · página de construção
+   Só usa tokens do design system. Nenhum valor de cor ou tipo cru aqui.
+   Tema escuro (Graphite) porque é o fundo institucional da marca.
+   ========================================================================== */
+
+.page {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow-x: hidden;
+}
+
+/* O feixe: origem no canto inferior esquerdo, abrindo para cima (§07). */
+.page__feixe {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* O manual proíbe o feixe sobre conteúdo com muita informação. Este véu
+   preserva o grafismo e mantém o texto legível: mesma cor da superfície,
+   dissolvendo na direção em que o leque abre. */
+.page--feixe::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(96deg,
+    var(--bv-graphite) 0%,
+    rgb(24 23 28 / 0.88) 32%,
+    rgb(24 23 28 / 0.42) 54%,
+    transparent 74%);
+}
+
+.page__inner,
+.page__foot {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--bv-container);
+  margin-inline: auto;
+  padding-inline: clamp(var(--bv-space-5), 6vw, var(--bv-space-11));
+}
+
+.page__inner {
+  align-self: center;
+  padding-block: clamp(var(--bv-space-9), 12vh, var(--bv-space-12));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.page__mark {
+  font-size: clamp(1.75rem, 5.5vw, 3.25rem);
+  margin-bottom: clamp(var(--bv-space-7), 7vh, var(--bv-space-10));
+}
+
+/* Status com ponto pulsante — o único movimento da página. */
+.page__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bv-space-3);
+  margin-bottom: var(--bv-space-5);
+}
+
+.page__dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  flex: none;
+  background: var(--bv-lilac);
+  border-radius: var(--bv-radius-pill);
+  animation: page-pulse 2.4s var(--bv-ease) infinite;
+}
+
+@keyframes page-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.35; transform: scale(0.78); }
+}
+
+.page__title {
+  max-width: 26ch;
+  font-size: clamp(2.15rem, 6.5vw, var(--bv-text-6xl));
+  margin-bottom: var(--bv-space-5);
+}
+
+.page__lede {
+  max-width: 40ch;
+  margin-bottom: clamp(var(--bv-space-7), 6vh, var(--bv-space-9));
+}
+
+.page__signature {
+  font-size: clamp(var(--bv-text-lg), 2.6vw, var(--bv-text-2xl));
+  margin-bottom: var(--bv-space-6);
+}
+
+.page__contact {
+  font-family: var(--bv-font-mono);
+  font-size: var(--bv-text-sm);
+  letter-spacing: var(--bv-tracking-wide);
+  color: var(--bv-text-brand);
+  text-decoration: none;
+  padding-bottom: var(--bv-space-1);
+  border-bottom: var(--bv-border-hairline) solid var(--bv-border-brand);
+  transition: opacity var(--bv-duration-base) var(--bv-ease);
+}
+.page__contact:hover { opacity: 0.7; }
+
+.page__cta { margin-top: var(--bv-space-4); }
+
+.page__foot {
+  padding-block: var(--bv-space-7);
+  border-top: var(--bv-border-hairline) solid var(--bv-border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--bv-space-3) var(--bv-space-5);
+  /* Alinhado à esquerda de propósito: o canto inferior direito é onde o feixe
+     converge, e texto ali brigaria com a parte mais densa do grafismo. */
+}
+
+.page__phrase {
+  font-size: clamp(var(--bv-text-base), 2.2vw, var(--bv-text-lg));
+  color: var(--bv-text-muted);
+  margin: 0;
+}
+
+.page__meta {
+  font-family: var(--bv-font-mono);
+  font-size: var(--bv-text-xs);
+  letter-spacing: var(--bv-tracking-wide);
+  text-transform: uppercase;
+  color: var(--bv-text-subtle);
+  margin: 0;
+}
+
+/* Em tela estreita o leque alcança a coluna de texto: o véu precisa avançar
+   mais para a direita, senão as linhas cruzam o rodapé. */
+@media (max-width: 760px) {
+  .page--feixe::before {
+    background: linear-gradient(100deg,
+      var(--bv-graphite) 0%,
+      rgb(24 23 28 / 0.95) 48%,
+      rgb(24 23 28 / 0.60) 70%,
+      transparent 90%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page__dot { animation: none; }
+}
