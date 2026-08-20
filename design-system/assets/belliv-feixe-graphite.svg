@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Feixe BELLIV">
+  <title>Feixe BELLIV</title>
+  <desc>Grafismo unico. 13 raios de mesmo comprimento com origem comum em canto inferior. Passo angular 7 graus, do primeiro a 1 grau da vertical ao ultimo a 85 graus. Traco 1pt, opacidade 100 por cento na origem a 40 por cento na ponta.</desc>
+  <defs>
+    <linearGradient id="g0" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="36.65" y2="-1199.68"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g1" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="292.26" y2="-1179.56"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g2" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="543.52" y2="-1128.44"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g3" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="786.67" y2="-1047.09"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g4" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="1018.10" y2="-936.70"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g5" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="1234.35" y2="-798.94"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g6" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="1432.20" y2="-635.84"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g7" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="1608.69" y2="-449.85"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g8" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="1761.21" y2="-243.74"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g9" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="1887.47" y2="-20.58"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g10" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="1985.59" y2="216.31"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g11" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="2054.11" y2="463.39"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+    <linearGradient id="g12" gradientUnits="userSpaceOnUse" x1="0.00" y1="900.00" x2="2092.01" y2="716.97"><stop offset="0" stop-color="#A98BEF" stop-opacity="1"/><stop offset="1" stop-color="#A98BEF" stop-opacity="0.4"/></linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#18171C"/>
+  <g fill="none" stroke-width="1" stroke-linecap="butt">
+    <line x1="0.00" y1="900.00" x2="36.65" y2="-1199.68" stroke="url(#g0)"/>
+    <line x1="0.00" y1="900.00" x2="292.26" y2="-1179.56" stroke="url(#g1)"/>
+    <line x1="0.00" y1="900.00" x2="543.52" y2="-1128.44" stroke="url(#g2)"/>
+    <line x1="0.00" y1="900.00" x2="786.67" y2="-1047.09" stroke="url(#g3)"/>
+    <line x1="0.00" y1="900.00" x2="1018.10" y2="-936.70" stroke="url(#g4)"/>
+    <line x1="0.00" y1="900.00" x2="1234.35" y2="-798.94" stroke="url(#g5)"/>
+    <line x1="0.00" y1="900.00" x2="1432.20" y2="-635.84" stroke="url(#g6)"/>
+    <line x1="0.00" y1="900.00" x2="1608.69" y2="-449.85" stroke="url(#g7)"/>
+    <line x1="0.00" y1="900.00" x2="1761.21" y2="-243.74" stroke="url(#g8)"/>
+    <line x1="0.00" y1="900.00" x2="1887.47" y2="-20.58" stroke="url(#g9)"/>
+    <line x1="0.00" y1="900.00" x2="1985.59" y2="216.31" stroke="url(#g10)"/>
+    <line x1="0.00" y1="900.00" x2="2054.11" y2="463.39" stroke="url(#g11)"/>
+    <line x1="0.00" y1="900.00" x2="2092.01" y2="716.97" stroke="url(#g12)"/>
+  </g>
+</svg>

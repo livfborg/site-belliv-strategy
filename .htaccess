@@ -1,0 +1,104 @@
+# ==========================================================================
+# BELLIV STRATEGY · configuração Apache
+#
+# Só tem efeito em hospedagem que roda Apache — é o caso da hospedagem
+# compartilhada da Hostinger. Em VPS com Node, quem manda é o server.js e
+# este arquivo é ignorado.
+#
+# A raiz do repositório é a raiz web: index.html e 404.html na raiz são
+# gerados por `npm run build` a partir de src/views/.
+# ==========================================================================
+
+DirectoryIndex index.html
+
+# Sem listagem de diretório: sem isso, /design-system/ mostraria o conteúdo.
+Options -Indexes
+
+ErrorDocument 404 /404.html
+
+# --------------------------------------------------------------------------
+# BLOQUEIO DE CONTEÚDO QUE NÃO É DO SITE
+#
+# Em deploy por Git o repositório inteiro vira raiz web. Sem estas regras,
+# docs/ serviria a documentação interna da marca (posicionamento, território
+# verbal) em https://seudominio/docs/.
+#
+# Ao adicionar diretórios ao repositório, avalie se precisam entrar aqui.
+# --------------------------------------------------------------------------
+
+# documentação interna da marca
+RedirectMatch 404 ^/docs(/|$)
+
+# fonte dos templates: o que é servido são os gerados na raiz
+RedirectMatch 404 ^/src(/|$)
+
+# testes
+RedirectMatch 404 ^/test(/|$)
+
+# metadados de repositório e de dependências
+RedirectMatch 404 ^/\.git(/|$)
+RedirectMatch 404 ^/node_modules(/|$)
+
+# O JSON de tokens carrega o território verbal e a personalidade da marca.
+# A página não precisa dele: consome os tokens em CSS.
+RedirectMatch 404 ^/design-system/tokens/belliv-tokens\.json$
+
+<FilesMatch "^(server|build)\.js$">
+  Require all denied
+</FilesMatch>
+
+<FilesMatch "^(package(-lock)?\.json|\.gitignore|\.htaccess|\.env.*)$">
+  Require all denied
+</FilesMatch>
+
+# Markdown: READMEs são documentação de projeto, não conteúdo público.
+<FilesMatch "\.md$">
+  Require all denied
+</FilesMatch>
+
+# --------------------------------------------------------------------------
+# CABEÇALHOS DE SEGURANÇA
+# Espelham o que o server.js envia, para o comportamento não mudar com o host.
+# --------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Content-Security-Policy "default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'none'"
+</IfModule>
+
+# --------------------------------------------------------------------------
+# COMPRESSÃO
+# --------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain
+  AddOutputFilterByType DEFLATE text/javascript application/javascript
+  AddOutputFilterByType DEFLATE image/svg+xml application/json
+</IfModule>
+
+# --------------------------------------------------------------------------
+# CACHE
+# HTML curto, porque a página muda. Estáticos longos.
+# --------------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html                 "access plus 5 minutes"
+  ExpiresByType text/css                  "access plus 1 month"
+  ExpiresByType text/javascript           "access plus 1 month"
+  ExpiresByType application/javascript    "access plus 1 month"
+  ExpiresByType image/svg+xml             "access plus 1 month"
+  ExpiresByType image/x-icon              "access plus 1 month"
+</IfModule>
+
+# --------------------------------------------------------------------------
+# HTTPS
+#
+# DESATIVADO de propósito. Ligue somente depois que o certificado SSL estiver
+# ativo no painel da Hostinger — habilitar antes gera loop de redirecionamento
+# e o site sai do ar. Para ligar, remova o # das três linhas.
+# --------------------------------------------------------------------------
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} !=on
+#   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+# </IfModule>

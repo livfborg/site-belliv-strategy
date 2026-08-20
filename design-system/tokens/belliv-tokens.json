@@ -1,0 +1,298 @@
+{
+  "$schema": "https://design-tokens.org/schema.json",
+  "$description": "BELLIV Strategy — design tokens. Derivado do Manual da Marca BELLIV v1.0 (2026).",
+  "meta": {
+    "brand": "BELLIV Strategy",
+    "signature": "WE BELLIV IN STRATEGY.",
+    "manualVersion": "1.0",
+    "year": 2026
+  },
+  "color": {
+    "brand": {
+      "lilac": {
+        "value": "#A98BEF",
+        "name": "Belliv Lilac",
+        "use": "Acento: títulos, símbolo e detalhes."
+      },
+      "lilacInk": {
+        "value": "#5B3FB0",
+        "name": "Lilac Ink",
+        "use": "Texto corrido e links em fundo claro."
+      },
+      "deepViolet": {
+        "value": "#302544",
+        "name": "Deep Violet",
+        "use": "Superfícies de destaque. Nunca no mesmo bloco que Graphite."
+      },
+      "graphite": {
+        "value": "#18171C",
+        "name": "Graphite",
+        "use": "Fundo institucional."
+      },
+      "softLilac": {
+        "value": "#EAE4FA",
+        "name": "Soft Lilac",
+        "use": "Superfície clara de marca."
+      },
+      "ivory": {
+        "value": "#F8F7F2",
+        "name": "Ivory",
+        "use": "Papel."
+      }
+    },
+    "proportion": {
+      "graphite": "60%",
+      "ivory": "25%",
+      "deepViolet": "10%",
+      "lilac": "5%"
+    },
+    "violet": {
+      "50": "#F4F1FE",
+      "100": "#EAE4FA",
+      "200": "#D8CDF7",
+      "300": "#C3AEF2",
+      "400": "#A98BEF",
+      "500": "#8E6AE4",
+      "600": "#7452CF",
+      "700": "#5B3FB0",
+      "800": "#45308A",
+      "900": "#302544",
+      "950": "#1E1830"
+    },
+    "neutral": {
+      "0": "#FFFFFF",
+      "50": "#F8F7F2",
+      "100": "#F1EFE9",
+      "200": "#E3E0D9",
+      "300": "#CAC7C2",
+      "400": "#A5A2A6",
+      "500": "#7C7A80",
+      "600": "#5C5A61",
+      "700": "#414046",
+      "800": "#2A292F",
+      "900": "#18171C",
+      "950": "#0F0E12"
+    },
+    "functional": {
+      "$note": "NÃO consta no manual. Extensão para interface. Uso restrito a feedback de sistema, nunca em peça de marca.",
+      "success": {
+        "value": "#1F6F5C",
+        "contrastOnIvory": "5.62:1",
+        "level": "AA"
+      },
+      "successOnDark": {
+        "value": "#5FC9AC",
+        "contrastOnGraphite": "8.86:1",
+        "level": "AAA"
+      },
+      "warning": {
+        "value": "#8A5A12",
+        "contrastOnIvory": "5.51:1",
+        "level": "AA"
+      },
+      "warningOnDark": {
+        "value": "#E5B15C",
+        "contrastOnGraphite": "9.15:1",
+        "level": "AAA"
+      },
+      "danger": {
+        "value": "#A8283A",
+        "contrastOnIvory": "6.46:1",
+        "level": "AA"
+      },
+      "dangerOnDark": {
+        "value": "#F2818E",
+        "contrastOnGraphite": "7.05:1",
+        "level": "AAA"
+      },
+      "info": {
+        "value": "#5B3FB0",
+        "contrastOnIvory": "7.04:1",
+        "level": "AAA"
+      },
+      "infoOnDark": {
+        "value": "#A98BEF",
+        "contrastOnGraphite": "6.47:1",
+        "level": "AA"
+      }
+    }
+  },
+  "typography": {
+    "family": {
+      "sans": {
+        "value": "Manrope",
+        "role": "Principal. Títulos institucionais, textos, interface e assinaturas."
+      },
+      "serif": {
+        "value": "Instrument Serif",
+        "role": "Destaque. Frases de marca e aberturas editoriais. NUNCA em texto corrido."
+      },
+      "mono": {
+        "value": "Menlo",
+        "role": "Rótulos técnicos e código."
+      }
+    },
+    "weight": {
+      "extralight": 200,
+      "light": 300,
+      "regular": 400,
+      "semibold": 600
+    },
+    "weightUse": {
+      "200": "Wordmark e títulos grandes",
+      "300": "Títulos",
+      "400": "Texto corrido",
+      "600": "Rótulos e ênfase"
+    },
+    "scale": {
+      "$ratio": 1.25,
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.25rem",
+      "xl": "1.5625rem",
+      "2xl": "1.9531rem",
+      "3xl": "2.4414rem",
+      "4xl": "3.0518rem",
+      "5xl": "3.8147rem",
+      "6xl": "4.7684rem"
+    },
+    "leading": {
+      "tight": 1.05,
+      "snug": 1.15,
+      "normal": 1.5,
+      "relaxed": 1.65
+    },
+    "tracking": {
+      "tight": "-0.02em",
+      "normal": "0",
+      "wide": "0.08em",
+      "wider": "0.18em",
+      "widest": "0.38em",
+      "sub": "0.52em"
+    }
+  },
+  "space": {
+    "$base": "4px",
+    "0": "0",
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "5": "1.5rem",
+    "6": "2rem",
+    "7": "2.5rem",
+    "8": "3rem",
+    "9": "4rem",
+    "10": "5rem",
+    "11": "6rem",
+    "12": "8rem"
+  },
+  "radius": {
+    "none": "0",
+    "sm": "2px",
+    "md": "4px",
+    "pill": "999px"
+  },
+  "border": {
+    "hairline": "1px",
+    "thick": "2px"
+  },
+  "shadow": {
+    "sm": "0 1px 2px rgb(24 23 28 / 0.06)",
+    "md": "0 4px 16px rgb(24 23 28 / 0.08)",
+    "lg": "0 16px 48px rgb(24 23 28 / 0.14)",
+    "focus": "0 0 0 3px rgb(169 139 239 / 0.45)"
+  },
+  "motion": {
+    "ease": "cubic-bezier(0.2, 0, 0.2, 1)",
+    "easeOut": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "duration": {
+      "fast": "120ms",
+      "base": "200ms",
+      "slow": "420ms"
+    }
+  },
+  "layout": {
+    "container": "76rem",
+    "containerSm": "44rem",
+    "gutter": "1.5rem",
+    "columns": 12
+  },
+  "graphic": {
+    "symbolV": {
+      "$concept": "Vision, Value, Velocity, Visionary thinking. Um vetor que abre caminhos.",
+      "$rule": "Não é a letra V da tipografia.",
+      "$source": "Geometria medida na página 5 do Manual da Marca v1.0.",
+      "openingAngle": "50.67deg",
+      "halfAngle": "25.335deg",
+      "widthHeightRatio": 0.8983,
+      "thickness": "12% da altura, perpendicular ao eixo do braço",
+      "innerVertexDepth": "71.96% da altura",
+      "topTerminals": "corte perpendicular ao eixo do braço",
+      "bottomVertex": "ângulo vivo, sem raio",
+      "path": "M 0.000 7.702 L 67.370 150.000 L 134.740 7.702 L 118.472 0.000 L 67.370 107.935 L 16.269 0.000 Z",
+      "viewBox": "0 0 134.740 150.000"
+    },
+    "fan": {
+      "$name": "Feixe BELLIV",
+      "$rule": "Grafismo único. Não existem duas versões.",
+      "$source": "Geometria medida na página 9 do Manual da Marca v1.0.",
+      "rays": 13,
+      "equalLength": true,
+      "$lengthNote": "Os 13 raios têm o mesmo comprimento — as pontas descrevem um arco, não a moldura. Em aplicação ampliada as pontas caem fora do quadro e o corte fica invisível.",
+      "origin": "canto inferior",
+      "direction": "abertura para cima",
+      "angleFromVertical": {
+        "first": "1deg",
+        "step": "7deg",
+        "last": "85deg",
+        "spread": "84deg"
+      },
+      "strokeWidth": "1pt em escala de referência",
+      "opacity": {
+        "origin": 1,
+        "tip": 0.4,
+        "$note": "Gradiente ao longo de cada raio: 100% na origem, 40% na ponta."
+      },
+      "allowedBackgrounds": [
+        "#18171C",
+        "#302544"
+      ],
+      "forbidden": [
+        "Ivory",
+        "fotografia com muita informação"
+      ]
+    }
+  },
+  "logo": {
+    "wordmark": "BELLIV",
+    "descriptor": "STRATEGY",
+    "clearSpace": "altura da letra B em todos os lados",
+    "minSize": "24mm de largura",
+    "forbidden": [
+      "distorcer ou inclinar",
+      "aplicar sobre gradiente",
+      "usar cor fora da paleta",
+      "colorir letras isoladas"
+    ]
+  },
+  "voice": {
+    "signature": "WE BELLIV IN STRATEGY.",
+    "signatureRule": "Permanece em inglês em qualquer idioma.",
+    "variations": [
+      "We Belliv in New Possibilities.",
+      "We Belliv in What Comes Next.",
+      "We Belliv in Reinvention.",
+      "We Belliv in Moving Forward."
+    ],
+    "personality": [
+      "Estratégica",
+      "Visionária",
+      "Precisa",
+      "Sofisticada",
+      "Contemporânea",
+      "Catalisadora"
+    ]
+  }
+}

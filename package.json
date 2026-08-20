@@ -1,0 +1,17 @@
+{
+  "name": "site-belliv-strategy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Site da BELLIV Strategy",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "build": "node build.js",
+    "test": "node --test"
+  }
+}

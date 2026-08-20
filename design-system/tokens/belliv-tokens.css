@@ -1,0 +1,269 @@
+/* ==========================================================================
+   BELLIV STRATEGY · DESIGN TOKENS
+   Derivado do Manual da Marca BELLIV v1.0 (2026)
+   --------------------------------------------------------------------------
+   Camada 1  primitivos   — valores crus, nunca usados direto em componente
+   Camada 2  semânticos   — o que você usa: --bv-surface, --bv-text, ...
+   Camada 3  componentes  — em css/belliv-components.css
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------- 1. COR */
+  /* Cores oficiais do manual (§05) — não alterar */
+  --bv-lilac:        #A98BEF;   /* Belliv Lilac  · acento, títulos, símbolo  */
+  --bv-lilac-ink:    #5B3FB0;   /* Lilac Ink     · texto e links em claro    */
+  --bv-deep-violet:  #302544;   /* Deep Violet   · superfícies de destaque   */
+  --bv-graphite:     #18171C;   /* Graphite      · fundo institucional       */
+  --bv-soft-lilac:   #EAE4FA;   /* Soft Lilac    · superfície clara de marca */
+  --bv-ivory:        #F8F7F2;   /* Ivory         · papel                     */
+
+  /* Escala violeta — extensão para estados de interface.
+     400 e 700 e 900 e 100 são as cores oficiais do manual. */
+  --bv-violet-50:  #F4F1FE;
+  --bv-violet-100: #EAE4FA;  /* = Soft Lilac   */
+  --bv-violet-200: #D8CDF7;
+  --bv-violet-300: #C3AEF2;
+  --bv-violet-400: #A98BEF;  /* = Belliv Lilac */
+  --bv-violet-500: #8E6AE4;
+  --bv-violet-600: #7452CF;
+  --bv-violet-700: #5B3FB0;  /* = Lilac Ink    */
+  --bv-violet-800: #45308A;
+  --bv-violet-900: #302544;  /* = Deep Violet  */
+  --bv-violet-950: #1E1830;
+
+  /* Escala neutra — papel quente (Ivory) → tinta fria (Graphite) */
+  --bv-neutral-0:   #FFFFFF;
+  --bv-neutral-50:  #F8F7F2;  /* = Ivory     */
+  --bv-neutral-100: #F1EFE9;
+  --bv-neutral-200: #E3E0D9;
+  --bv-neutral-300: #CAC7C2;
+  --bv-neutral-400: #A5A2A6;
+  --bv-neutral-500: #7C7A80;
+  --bv-neutral-600: #5C5A61;
+  --bv-neutral-700: #414046;
+  --bv-neutral-800: #2A292F;
+  --bv-neutral-900: #18171C;  /* = Graphite  */
+  --bv-neutral-950: #0F0E12;
+
+  /* Funcionais — NÃO estão no manual. Extensão obrigatória para interface.
+     Escolhidas frias/dessaturadas para não brigar com "evitar cores quentes
+     saturadas" (§08). Cada uma passa AA na superfície a que se destina.
+     Uso restrito a feedback de sistema — nunca em peça de marca.            */
+  --bv-success:          #1F6F5C;  /* 5.62:1 sobre Ivory    · AA  */
+  --bv-success-on-dark:  #5FC9AC;  /* 8.86:1 sobre Graphite · AAA */
+  --bv-warning:          #8A5A12;  /* 5.51:1 sobre Ivory    · AA  */
+  --bv-warning-on-dark:  #E5B15C;  /* 9.15:1 sobre Graphite · AAA */
+  --bv-danger:           #A8283A;  /* 6.46:1 sobre Ivory    · AA  */
+  --bv-danger-on-dark:   #F2818E;  /* 7.05:1 sobre Graphite · AAA */
+  --bv-info:             #5B3FB0;  /* = Lilac Ink                 */
+  --bv-info-on-dark:     #A98BEF;  /* = Belliv Lilac              */
+
+  /* --------------------------------------------------- 2. TIPOGRAFIA (§06) */
+  --bv-font-sans:  "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bv-font-serif: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+  --bv-font-mono:  "Menlo", ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  --bv-weight-extralight: 200;  /* wordmark e títulos grandes */
+  --bv-weight-light:      300;  /* títulos                    */
+  --bv-weight-regular:    400;  /* texto corrido              */
+  --bv-weight-semibold:   600;  /* rótulos e ênfase           */
+
+  /* Escala tipográfica — razão 1.25 (major third), base 16px */
+  --bv-text-xs:    0.75rem;   /* 12px · rótulos micro        */
+  --bv-text-sm:    0.875rem;  /* 14px · apoio, legendas      */
+  --bv-text-base:  1rem;      /* 16px · corpo                */
+  --bv-text-lg:    1.25rem;   /* 20px · corpo destacado      */
+  --bv-text-xl:    1.5625rem; /* 25px · h4                   */
+  --bv-text-2xl:   1.9531rem; /* 31px · h3                   */
+  --bv-text-3xl:   2.4414rem; /* 39px · h2                   */
+  --bv-text-4xl:   3.0518rem; /* 49px · h1                   */
+  --bv-text-5xl:   3.8147rem; /* 61px · display              */
+  --bv-text-6xl:   4.7684rem; /* 76px · display grande       */
+
+  --bv-leading-tight:   1.05;  /* display serif               */
+  --bv-leading-snug:    1.15;  /* títulos                     */
+  --bv-leading-normal:  1.5;   /* texto corrido               */
+  --bv-leading-relaxed: 1.65;  /* texto longo                 */
+
+  /* Tracking — a marca é definida pelo letterspacing largo dos rótulos */
+  --bv-tracking-tight:  -0.02em;  /* display serif             */
+  --bv-tracking-normal: 0;
+  --bv-tracking-wide:   0.08em;   /* rótulos de seção          */
+  --bv-tracking-wider:  0.18em;   /* rótulos institucionais    */
+  --bv-tracking-widest: 0.38em;   /* wordmark BELLIV           */
+  --bv-tracking-sub:    0.52em;   /* subtítulo STRATEGY        */
+
+  /* ------------------------------------------------ 3. ESPAÇO — base 4px  */
+  --bv-space-0:   0;
+  --bv-space-1:   0.25rem;  /*  4px */
+  --bv-space-2:   0.5rem;   /*  8px */
+  --bv-space-3:   0.75rem;  /* 12px */
+  --bv-space-4:   1rem;     /* 16px */
+  --bv-space-5:   1.5rem;   /* 24px */
+  --bv-space-6:   2rem;     /* 32px */
+  --bv-space-7:   2.5rem;   /* 40px */
+  --bv-space-8:   3rem;     /* 48px */
+  --bv-space-9:   4rem;     /* 64px */
+  --bv-space-10:  5rem;     /* 80px */
+  --bv-space-11:  6rem;     /* 96px */
+  --bv-space-12:  8rem;     /* 128px */
+
+  /* --------------------------------------------------------- 4. GEOMETRIA */
+  /* A marca é de ângulo vivo. Raio é quase zero por princípio.            */
+  --bv-radius-none: 0;
+  --bv-radius-sm:   2px;
+  --bv-radius-md:   4px;   /* máximo para superfícies de interface */
+  --bv-radius-pill: 999px; /* só em tags e badges                 */
+
+  --bv-border-hairline: 1px;  /* traço do sistema gráfico = 1pt */
+  --bv-border-thick:    2px;
+
+  /* Símbolo V — geometria travada (§03), medida no manual */
+  --bv-symbol-angle:      50.67deg; /* abertura total, constante            */
+  --bv-symbol-half-angle: 25.335deg;
+  --bv-symbol-ratio:      0.8983;   /* largura / altura                     */
+  --bv-symbol-thickness:  12%;      /* da altura, perpendicular ao braço    */
+  --bv-symbol-inner-vertex: 71.96%; /* profundidade do vértice interno      */
+  /* terminais superiores: corte perpendicular ao eixo do braço             */
+  /* vértice inferior: ângulo vivo, sem raio                                */
+
+  /* Feixe BELLIV (§07), medido no manual */
+  --bv-fan-rays:        13;      /* raios de MESMO comprimento           */
+  --bv-fan-angle-start: 1deg;    /* primeiro raio, a partir da vertical  */
+  --bv-fan-angle-step:  7deg;    /* passo angular constante              */
+  --bv-fan-angle-end:   85deg;   /* último raio  (1 + 7 × 12)            */
+  --bv-fan-spread:      84deg;   /* abertura total do leque              */
+  --bv-fan-stroke:      1px;     /* 1pt em escala de referência          */
+  --bv-fan-opacity-origin: 1;    /* opacidade na origem                  */
+  --bv-fan-opacity-tip:  0.4;    /* opacidade na ponta                   */
+
+  /* ----------------------------------------------------------- 5. SOMBRAS */
+  /* Em marca escura, profundidade vem de superfície e não de sombra.      */
+  --bv-shadow-none: none;
+  --bv-shadow-sm:   0 1px 2px rgb(24 23 28 / 0.06);
+  --bv-shadow-md:   0 4px 16px rgb(24 23 28 / 0.08);
+  --bv-shadow-lg:   0 16px 48px rgb(24 23 28 / 0.14);
+  --bv-shadow-focus: 0 0 0 3px rgb(169 139 239 / 0.45);
+
+  /* -------------------------------------------------------- 6. MOVIMENTO */
+  --bv-ease:          cubic-bezier(0.2, 0, 0.2, 1);
+  --bv-ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --bv-duration-fast: 120ms;
+  --bv-duration-base: 200ms;
+  --bv-duration-slow: 420ms;
+
+  /* ------------------------------------------------------------ 7. LAYOUT */
+  --bv-container:    76rem;  /* 1216px */
+  --bv-container-sm: 44rem;  /*  704px · coluna de leitura */
+  --bv-gutter:       var(--bv-space-5);
+  --bv-columns:      12;
+
+  /* ==================================================================
+     SEMÂNTICOS — TEMA CLARO (Ivory)
+     Proporção de marca (§05): 60% Graphite · 25% Ivory · 10% Deep
+     Violet · 5% Lilac. O tema claro é a exceção editorial; o escuro
+     é o institucional.
+     ================================================================== */
+  --bv-surface:          var(--bv-ivory);
+  --bv-surface-raised:   var(--bv-neutral-0);
+  --bv-surface-sunken:   var(--bv-neutral-100);
+  --bv-surface-brand:    var(--bv-soft-lilac);
+  --bv-surface-inverse:  var(--bv-graphite);
+
+  --bv-text:             var(--bv-graphite);      /* 16.62:1 · AAA */
+  --bv-text-muted:       var(--bv-neutral-600);   /*  6.34:1 · AA  */
+  --bv-text-subtle:      var(--bv-neutral-500);   /*  3.95:1 · só ≥24px */
+  --bv-text-brand:       var(--bv-lilac-ink);     /*  7.04:1 · AAA */
+  --bv-text-on-inverse:  var(--bv-ivory);
+  --bv-text-display:     var(--bv-lilac);         /*  2.57:1 · APENAS decorativo ≥40px */
+
+  --bv-border:           var(--bv-neutral-200);
+  --bv-border-strong:    var(--bv-neutral-300);
+  --bv-border-brand:     var(--bv-lilac);
+
+  --bv-action:           var(--bv-lilac-ink);
+  --bv-action-hover:     var(--bv-violet-800);
+  --bv-action-active:    var(--bv-violet-900);
+  --bv-action-text:      var(--bv-ivory);
+  --bv-focus-ring:       var(--bv-lilac-ink);
+
+  --bv-graphic-stroke:   var(--bv-lilac);
+}
+
+/* ====================================================================
+   SEMÂNTICOS — TEMA ESCURO (Graphite) · institucional, o padrão da marca
+   Aplique via [data-bv-theme="dark"] ou .bv-dark em qualquer bloco.
+   ==================================================================== */
+[data-bv-theme="dark"],
+.bv-dark {
+  --bv-surface:          var(--bv-graphite);
+  --bv-surface-raised:   var(--bv-neutral-800);
+  --bv-surface-sunken:   var(--bv-neutral-950);
+  --bv-surface-brand:    var(--bv-deep-violet);
+  --bv-surface-inverse:  var(--bv-ivory);
+
+  --bv-text:             var(--bv-ivory);          /* 16.62:1 · AAA */
+  --bv-text-muted:       var(--bv-neutral-300);    /* 10.58:1 · AAA */
+  --bv-text-subtle:      var(--bv-neutral-400);    /*  7.06:1 · AAA */
+  --bv-text-brand:       var(--bv-lilac);          /*  6.47:1 · AA  */
+  --bv-text-on-inverse:  var(--bv-graphite);
+  --bv-text-display:     var(--bv-lilac);          /*  6.47:1 · AA — livre */
+
+  --bv-border:           var(--bv-neutral-800);
+  --bv-border-strong:    var(--bv-neutral-700);
+  --bv-border-brand:     var(--bv-lilac);
+
+  --bv-action:           var(--bv-lilac);
+  --bv-action-hover:     var(--bv-violet-300);
+  --bv-action-active:    var(--bv-violet-200);
+  --bv-action-text:      var(--bv-graphite);
+  --bv-focus-ring:       var(--bv-lilac);
+
+  --bv-success:          var(--bv-success-on-dark);
+  --bv-warning:          var(--bv-warning-on-dark);
+  --bv-danger:           var(--bv-danger-on-dark);
+  --bv-info:             var(--bv-info-on-dark);
+
+  --bv-graphic-stroke:   var(--bv-lilac);
+}
+
+/* Deep Violet como superfície de destaque.
+   REGRA DO MANUAL (§05): Deep Violet nunca no mesmo bloco que Graphite. */
+[data-bv-theme="violet"],
+.bv-violet {
+  --bv-surface:          var(--bv-deep-violet);
+  --bv-surface-raised:   var(--bv-violet-800);
+  --bv-surface-sunken:   var(--bv-violet-950);
+  --bv-surface-brand:    var(--bv-violet-800);
+  --bv-surface-inverse:  var(--bv-ivory);
+
+  --bv-text:             var(--bv-ivory);          /* 13.28:1 · AAA */
+  --bv-text-muted:       var(--bv-soft-lilac);     /* 11.52:1 · AAA */
+  --bv-text-subtle:      var(--bv-violet-300);
+  --bv-text-brand:       var(--bv-lilac);          /*  5.17:1 · AA  */
+  --bv-text-on-inverse:  var(--bv-deep-violet);
+  --bv-text-display:     var(--bv-lilac);
+
+  --bv-border:           var(--bv-violet-800);
+  --bv-border-strong:    var(--bv-violet-700);
+  --bv-border-brand:     var(--bv-lilac);
+
+  --bv-action:           var(--bv-lilac);
+  --bv-action-hover:     var(--bv-violet-300);
+  --bv-action-active:    var(--bv-violet-200);
+  --bv-action-text:      var(--bv-deep-violet);
+  --bv-focus-ring:       var(--bv-lilac);
+
+  --bv-success:          var(--bv-success-on-dark);
+  --bv-warning:          var(--bv-warning-on-dark);
+  --bv-danger:           var(--bv-danger-on-dark);
+  --bv-info:             var(--bv-info-on-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --bv-duration-fast: 1ms;
+    --bv-duration-base: 1ms;
+    --bv-duration-slow: 1ms;
+  }
+}
